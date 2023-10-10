@@ -5,9 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 116, 78, 21)),
-        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'AppRest'),
     );
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -45,20 +43,60 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color(0xFFF1DCD3),
         title: Text(widget.title),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Menú'),
+              decoration: BoxDecoration(
+                color: Color(0xFFF1DCD3),
+              ),
+            ),
+            ListTile(
+              title: Text('Zona'),
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text('Ofertas'),
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text('Nosotros'),
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Center(
-              child: Text("Lista de restaurantes XD",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(
+              "Lista de restaurantes XD",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
