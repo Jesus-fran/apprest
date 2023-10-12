@@ -1,110 +1,109 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Mi aplicación',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 116, 78, 21)),
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'AppRest'),
+      home: LoginPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width * 0.9;
+    double offset = MediaQuery.of(context).size.height * 0.2;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFF1DCD3),
-        title: Text(widget.title),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            );
-          },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/fondo.jpg"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Menú'),
-              decoration: BoxDecoration(
-                color: Color(0xFFF1DCD3),
+        child: Stack(
+          children: [
+            // logotipo
+            Transform.translate(
+              offset: Offset(0, -offset),
+              child: Center(
+                child: FractionallySizedBox(
+                  widthFactor: 0.9,
+                  heightFactor: 0.9,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Image.asset("assets/logo.png", fit: BoxFit.contain),
+                  ),
+                ),
               ),
             ),
-            ListTile(
-              title: Text('Zona'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+            // Botón "Iniciar sesión"
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 3 * 28.35 + 80,
+              child: Center(
+                child: SizedBox(
+                  width: width,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Color(0xFFFFF854),
+                      side: BorderSide(color: Color(0xFFFFF854), width: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                    ),
+                    child:
+                        Text('Iniciar sesión', style: TextStyle(fontSize: 24)),
+                  ),
+                ),
+              ),
             ),
-            ListTile(
-              title: Text('Ofertas'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              title: Text('Nosotros'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+            // Botón "Registrarse"
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 3 * 28.35,
+              child: Center(
+                child: SizedBox(
+                  width: width,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Color(0xFFFF626B),
+                      side: BorderSide(color: Color(0xFFFF626B), width: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                    ),
+                    child: Text('Registrarse', style: TextStyle(fontSize: 24)),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Lista de restaurantes XD",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
