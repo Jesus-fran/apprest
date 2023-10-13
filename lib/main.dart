@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'login_sesion.dart'; // Importamos la vista
+import 'register.dart';
 
 void main() => runApp(MyApp());
 
@@ -62,7 +64,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   width: width,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // vista de inicio de sesión
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginInputPage()),
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       primary: Colors.black,
                       backgroundColor: Color(0xFFFFF854),
@@ -87,7 +96,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   width: width,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // ir a vista de registro
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       primary: Colors.black,
                       backgroundColor: Color(0xFFFF626B),
