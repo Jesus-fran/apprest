@@ -3,6 +3,8 @@ import 'register_user.dart'; // Importas la página de registro de usuario
 import 'register_rest.dart'; // Importas la página de registro de restaurante
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,13 +12,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterPage(),
+      home: const RegisterPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Convertir cm a pixels, asumiendo una resolución de 150 ppi (aproximado)
@@ -24,7 +28,7 @@ class RegisterPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/fondo.jpg"),
             fit: BoxFit.cover,
@@ -66,20 +70,20 @@ class RegisterPage extends StatelessWidget {
                 padding: EdgeInsets.all(cmToPx(0.5)),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       "Bienvenido",
                       style: TextStyle(
                         fontSize: 24,
@@ -87,8 +91,8 @@ class RegisterPage extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "¡Hola! Te damos la bienvenida a Perfect Connection. A continuación elige el tipo de registro que quieres realizar.",
                       style: TextStyle(fontSize: 13.5),
                       textAlign: TextAlign.left,
@@ -104,25 +108,25 @@ class RegisterPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RegisterUser(),
+                                    builder: (context) => const RegisterUser(),
                                   ),
                                 );
                               },
-                              child: Image.asset(
-                                "assets/usuario.png",
-                                width: cmToPx(3.0),
-                                height: cmToPx(3.0),
-                              ),
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFFFF854),
+                                backgroundColor: const Color(0xFFFFF854),
                                 fixedSize: Size(cmToPx(2), cmToPx(2)),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
+                              child: Image.asset(
+                                "assets/usuario.png",
+                                width: cmToPx(3.0),
+                                height: cmToPx(3.0),
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text("Usuario")
+                            const SizedBox(height: 5.0),
+                            const Text("Usuario")
                           ],
                         ),
                         SizedBox(width: cmToPx(0.2)),
@@ -133,25 +137,25 @@ class RegisterPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RegisterRest(),
+                                    builder: (context) => const RegisterRest(),
                                   ),
                                 );
                               },
-                              child: Image.asset(
-                                "assets/restaurante.png",
-                                width: cmToPx(3.0),
-                                height: cmToPx(3.0),
-                              ),
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFFF626B),
+                                backgroundColor: const Color(0xFFFF626B),
                                 fixedSize: Size(cmToPx(2), cmToPx(2)),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
+                              child: Image.asset(
+                                "assets/restaurante.png",
+                                width: cmToPx(3.0),
+                                height: cmToPx(3.0),
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text("Restaurante")
+                            const SizedBox(height: 5.0),
+                            const Text("Restaurante")
                           ],
                         ),
                       ],

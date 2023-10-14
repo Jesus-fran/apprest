@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'login_sesion.dart'; // Importamos la vista
-import 'register.dart';
+import 'vistas/login_sesion.dart'; // Importamos la vista
+import 'vistas/register.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -22,10 +24,10 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.9;
@@ -33,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/fondo.jpg"),
             fit: BoxFit.cover,
@@ -69,20 +71,20 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginInputPage()),
+                            builder: (context) => const LoginInputPage()),
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      primary: Colors.black,
-                      backgroundColor: Color(0xFFFFF854),
-                      side: BorderSide(color: Color(0xFFFFF854), width: 2),
+                      foregroundColor: Colors.black,
+                      backgroundColor: const Color(0xFFFFF854),
+                      side: const BorderSide(color: Color(0xFFFFF854), width: 2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                     ),
                     child:
-                        Text('Iniciar sesión', style: TextStyle(fontSize: 24)),
+                        const Text('Iniciar sesión', style: TextStyle(fontSize: 24)),
                   ),
                 ),
               ),
@@ -100,19 +102,19 @@ class _LoginPageState extends State<LoginPage> {
                       // ir a vista de registro
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(builder: (context) => const RegisterPage()),
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      primary: Colors.black,
-                      backgroundColor: Color(0xFFFF626B),
-                      side: BorderSide(color: Color(0xFFFF626B), width: 2),
+                      foregroundColor: Colors.black,
+                      backgroundColor: const Color(0xFFFF626B),
+                      side: const BorderSide(color: Color(0xFFFF626B), width: 2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                     ),
-                    child: Text('Registrarse', style: TextStyle(fontSize: 24)),
+                    child: const Text('Registrarse', style: TextStyle(fontSize: 24)),
                   ),
                 ),
               ),

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 
 class LoginInputPage extends StatelessWidget {
+  const LoginInputPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Iniciar sesión'),
+        title: const Text('Iniciar sesión'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Correo electrónico',
                 icon: Icon(Icons.email),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
-            SizedBox(height: 20),
-            TextField(
+            const SizedBox(height: 20),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Contraseña',
                 icon: Icon(Icons.lock),
@@ -27,7 +29,7 @@ class LoginInputPage extends StatelessWidget {
               obscureText: true,
             ),
             ElevatedButton(
-              child: Text('Entrar'),
+              child: const Text('Entrar'),
               onPressed: () {
                 // Aquí agregarías la lógica para manejar el inicio de sesión.
               },

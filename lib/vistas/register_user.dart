@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RegisterUser extends StatefulWidget {
+  const RegisterUser({super.key});
+
   @override
-  _RegisterUserState createState() => _RegisterUserState();
+  RegisterUserState createState() => RegisterUserState();
 }
 
-class _RegisterUserState extends State<RegisterUser> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class RegisterUserState extends State<RegisterUser> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void _register() {
     final name = _nameController.text;
@@ -24,14 +26,14 @@ class _RegisterUserState extends State<RegisterUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFF854),
-        title: Text(
+        backgroundColor: const Color(0xFFFFF854),
+        title: const Text(
           'Crear cuenta',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -43,7 +45,7 @@ class _RegisterUserState extends State<RegisterUser> {
             child: Image.asset('assets/usuario.png', width: 40),
           ),
         ],
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
@@ -51,80 +53,80 @@ class _RegisterUserState extends State<RegisterUser> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Nombre', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 4.0),
+            const Text('Nombre', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4.0),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child:
                       Image.asset('assets/usuario2.png', width: 20, height: 20),
                 ),
                 hintText: "Nombre",
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 8),
-            Text('Correo', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 4.0),
+            const SizedBox(height: 8),
+            const Text('Correo', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4.0),
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child:
                       Image.asset('assets/correo.png', width: 20, height: 20),
                 ),
                 hintText: "Correo",
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 8),
-            Text('Contraseña', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 4.0),
+            const SizedBox(height: 8),
+            const Text('Contraseña', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4.0),
             TextField(
               controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child:
                       Image.asset('assets/password.png', width: 20, height: 20),
                 ),
                 hintText: "Contraseña",
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ConstrainedBox(
-              constraints: BoxConstraints.tightFor(height: 50, width: 500),
+              constraints: const BoxConstraints.tightFor(height: 50, width: 500),
               child: ElevatedButton(
                 onPressed: _register,
-                child: Text(
-                  "Continuar",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xFFFFF854)),
+                      MaterialStateProperty.all<Color>(const Color(0xFFFFF854)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
                 ),
+                child: const Text(
+                  "Continuar",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -132,15 +134,15 @@ class _RegisterUserState extends State<RegisterUser> {
                   child: Container(
                     color: Colors.grey,
                     height: 1,
-                    margin: EdgeInsets.only(right: 5),
+                    margin: const EdgeInsets.only(right: 5),
                   ),
                 ),
-                Text("O"),
+                const Text("O"),
                 Expanded(
                   child: Container(
                     color: Colors.grey,
                     height: 1,
-                    margin: EdgeInsets.only(left: 5),
+                    margin: const EdgeInsets.only(left: 5),
                   ),
                 ),
               ],
