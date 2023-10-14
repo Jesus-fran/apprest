@@ -23,3 +23,9 @@ flutter:
   assets:
     - assets/fondo.jpg
     - assets/logo.png
+    - assets/restaurante.png
+    - assets/usuario.png
+    - assets/usuario2.png
+    - assets/correo.png
+    - assets/password.png
+    - assets/google.png

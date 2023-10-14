@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'register_user.dart'; // Importas la página de registro de usuario
+import 'register_rest.dart'; // Importas la página de registro de restaurante
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
 class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // esto es oara definir el tamaño de la pantalla
+    // Convertir cm a pixels, asumiendo una resolución de 150 ppi (aproximado)
     double cmToPx(double cm) => cm * 59.0551;
 
     return Scaffold(
@@ -47,22 +49,21 @@ class RegisterPage extends StatelessWidget {
                 offset: Offset(0, -MediaQuery.of(context).size.height * 0.30),
                 child: Image.asset(
                   "assets/logo.png",
-                  width: 300,
-                  height: 300,
+                  width: 150,
+                  height: 150,
                   fit: BoxFit.contain,
                 ),
               ),
             ),
             Positioned(
-              left: cmToPx(0.5),
-              right: cmToPx(0.5),
-              bottom: cmToPx(0.5),
-              top: MediaQuery.of(context).size.height * 0.5 +
-                  MediaQuery.of(context).size.height * 0.15 +
-                  150 -
-                  cmToPx(5) -
+              left: cmToPx(0.4),
+              right: cmToPx(0.4),
+              bottom: cmToPx(0.3),
+              top: MediaQuery.of(context).size.height * 0.5 -
+                  cmToPx(0.8) -
                   cmToPx(0.5),
               child: Container(
+                padding: EdgeInsets.all(cmToPx(0.5)),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -75,31 +76,87 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          "Bienvenido",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Bienvenido",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 16),
-                      Text(
-                        "¡Hola! Te damos la bienvenida a Perfect Conection. A continuación elija el tipo de registro que quiere realizar.",
-                        style: TextStyle(
-                          height: 2.0,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "¡Hola! Te damos la bienvenida a Perfect Connection. A continuación elige el tipo de registro que quieres realizar.",
+                      style: TextStyle(fontSize: 13.5),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(height: cmToPx(0.8)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterUser(),
+                                  ),
+                                );
+                              },
+                              child: Image.asset(
+                                "assets/usuario.png",
+                                width: cmToPx(3.0),
+                                height: cmToPx(3.0),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFFFFF854),
+                                fixedSize: Size(cmToPx(2), cmToPx(2)),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("Usuario")
+                          ],
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
+                        SizedBox(width: cmToPx(0.2)),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterRest(),
+                                  ),
+                                );
+                              },
+                              child: Image.asset(
+                                "assets/restaurante.png",
+                                width: cmToPx(3.0),
+                                height: cmToPx(3.0),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFFFF626B),
+                                fixedSize: Size(cmToPx(2), cmToPx(2)),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("Restaurante")
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -114,14 +171,12 @@ class BiteClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-
     path.moveTo(0.0, size.height * 0.1);
     path.quadraticBezierTo(
-        size.width / 2, size.height * 0.50, size.width, size.height * 0.1);
+        size.width / 2, size.height * 0.30, size.width, size.height * 0.1);
     path.lineTo(size.width, size.height);
     path.lineTo(0.0, size.height);
     path.close();
-
     return path;
   }
 

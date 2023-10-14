@@ -46,8 +46,8 @@ class _LoginPageState extends State<LoginPage> {
               offset: Offset(0, -offset),
               child: Center(
                 child: FractionallySizedBox(
-                  widthFactor: 0.9,
-                  heightFactor: 0.9,
+                  widthFactor: 0.6,
+                  heightFactor: 0.6,
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: Image.asset("assets/logo.png", fit: BoxFit.contain),
