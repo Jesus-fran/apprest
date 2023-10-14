@@ -1,6 +1,6 @@
+import 'package:baseapp/vistas/register_rest.dart';
 import 'package:flutter/material.dart';
 import 'vistas/login_sesion.dart'; // Importamos la vista
-import 'vistas/register.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mi aplicación',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const LoginPage(),
       debugShowCheckedModeBanner: false,
@@ -71,7 +71,7 @@ class LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginInputPage()),
+                            builder: (context) => const LoginUser()),
                       );
                     },
                     style: OutlinedButton.styleFrom(
@@ -102,7 +102,7 @@ class LoginPageState extends State<LoginPage> {
                       // ir a vista de registro
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const RegisterPage()),
+                        MaterialPageRoute(builder: (context) => const RegisterRest()),
                       );
                     },
                     style: OutlinedButton.styleFrom(
