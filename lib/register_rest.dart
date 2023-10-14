@@ -24,9 +24,9 @@ class _RegisterRestState extends State<RegisterRest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFF854),
+        backgroundColor: Color(0xFFFF626B),
         title: Text(
-          'Crear cuentas',
+          'Crear cuenta',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -40,7 +40,7 @@ class _RegisterRestState extends State<RegisterRest> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/usuario.png', width: 40),
+            child: Image.asset('assets/restaurante.png', width: 40),
           ),
         ],
         shape: RoundedRectangleBorder(
@@ -97,6 +97,7 @@ class _RegisterRestState extends State<RegisterRest> {
                   child:
                       Image.asset('assets/password.png', width: 20, height: 20),
                 ),
+                hintText: "Contraseña",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -114,7 +115,7 @@ class _RegisterRestState extends State<RegisterRest> {
                 ),
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xFFFFF854)),
+                      MaterialStateProperty.all<Color>(Color(0xFFFF626B)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),

@@ -97,6 +97,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   child:
                       Image.asset('assets/password.png', width: 20, height: 20),
                 ),
+                hintText: "Contraseña",
                 border: OutlineInputBorder(),
               ),
             ),
