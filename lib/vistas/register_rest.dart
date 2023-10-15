@@ -202,7 +202,7 @@ class RegisterRestState extends State<RegisterRest> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        debugPrint("datos login agregado correctamente");
+                        debugPrint("validado correctamente");
                         _register();
                       }
                     },
