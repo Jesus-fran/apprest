@@ -78,7 +78,7 @@ class LoginUserState extends State<LoginUser> {
                   ),
                   validator: (value) {
                     bool nameValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese un correo electrónico";
@@ -117,7 +117,7 @@ class LoginUserState extends State<LoginUser> {
                   ),
                   validator: (value) {
                     bool passInvalid = RegExp(
-                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&]+$")
+                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;:-]+$")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese una contraseña";

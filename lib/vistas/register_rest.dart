@@ -108,8 +108,7 @@ class RegisterRestState extends State<RegisterRest> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    bool nameValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    bool nameValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese un correo electrónico";
@@ -148,7 +147,7 @@ class RegisterRestState extends State<RegisterRest> {
                   ),
                   validator: (value) {
                     bool passInvalid = RegExp(
-                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&]+$")
+                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;:-]+$")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese una contraseña";
@@ -187,7 +186,7 @@ class RegisterRestState extends State<RegisterRest> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Ingrese una contraseña";
+                      return "Repita su contraseña";
                     } else if (value != _passwordController.text) {
                       return "Las contraseñas deben coincidir";
                     } else {
