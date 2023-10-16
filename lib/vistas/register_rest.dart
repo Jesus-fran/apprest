@@ -1,3 +1,5 @@
+import 'package:baseapp/modelos/user_model.dart';
+import 'package:baseapp/vistas/cargando.dart';
 import 'package:flutter/material.dart';
 
 class RegisterRest extends StatefulWidget {
@@ -21,9 +23,14 @@ class RegisterRestState extends State<RegisterRest> {
     final name = _nameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
-    debugPrint("Nombre: $name");
-    debugPrint("Correo: $email");
-    debugPrint("Contraseña: $password");
+    final UserModelo usuario =
+        UserModelo(email: email, password: password, username: name);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Cargando(
+                  usuario: usuario,
+                )));
   }
 
   @override
@@ -108,7 +115,8 @@ class RegisterRestState extends State<RegisterRest> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    bool nameValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                    bool nameValid = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese un correo electrónico";
@@ -147,7 +155,7 @@ class RegisterRestState extends State<RegisterRest> {
                   ),
                   validator: (value) {
                     bool passInvalid = RegExp(
-                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;:-]+$")
+                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;\s:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;\s:-]+$")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese una contraseña";

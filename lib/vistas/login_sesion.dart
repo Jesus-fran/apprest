@@ -1,3 +1,4 @@
+import 'package:baseapp/controladores/login.dart';
 import 'package:flutter/material.dart';
 
 class LoginUser extends StatefulWidget {
@@ -19,6 +20,12 @@ class LoginUserState extends State<LoginUser> {
 
     debugPrint("Correo: $email");
     debugPrint("Contraseña: $password");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPost();
   }
 
   @override
