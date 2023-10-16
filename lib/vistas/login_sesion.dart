@@ -1,4 +1,6 @@
 import 'package:baseapp/controladores/login.dart';
+import 'package:baseapp/modelos/user_model.dart';
+import 'package:baseapp/vistas/logueando.dart';
 import 'package:flutter/material.dart';
 
 class LoginUser extends StatefulWidget {
@@ -18,14 +20,16 @@ class LoginUserState extends State<LoginUser> {
     final email = _emailController.text;
     final password = _passwordController.text;
 
+    final UserModelo usuario =
+        UserModelo(email: email, password: password, username: '');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Logueando(
+                  usuario: usuario,
+                )));
     debugPrint("Correo: $email");
     debugPrint("Contraseña: $password");
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getPost();
   }
 
   @override
@@ -124,7 +128,7 @@ class LoginUserState extends State<LoginUser> {
                   ),
                   validator: (value) {
                     bool passInvalid = RegExp(
-                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;:-]+$")
+                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;\s:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;\s:-]+$")
                         .hasMatch(value!);
                     if (value.isEmpty) {
                       return "Ingrese una contraseña";
