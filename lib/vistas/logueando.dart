@@ -151,14 +151,14 @@ Widget succesMessage(context) {
     children: [
       const SizedBox(height: 150),
       const Text('Iniciaste sesión correctamente..',
-          style: TextStyle(fontSize: 30)),
+          style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
       const SizedBox(height: 60),
       const Icon(Icons.sentiment_satisfied_alt, size: 50),
       const SizedBox(height: 50),
       ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => const Home()));
+          Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(builder: (context) => const Home()), (route) => false,);
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(

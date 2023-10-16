@@ -149,7 +149,7 @@ Widget succesMessage(context) {
   return Column(
     children: [
       const SizedBox(height: 150),
-      const Text('Registrado correctamente..', style: TextStyle(fontSize: 30)),
+      const Text('Registrado correctamente..', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
       const SizedBox(height: 60),
       const Icon(Icons.sentiment_satisfied_alt, size: 50),
       const SizedBox(height: 50),

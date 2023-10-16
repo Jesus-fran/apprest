@@ -1,3 +1,5 @@
+import 'package:baseapp/main.dart';
+import 'package:baseapp/vistas/login_sesion.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -23,7 +25,7 @@ class _HomeState extends State<Home> {
           title: const Center(
             child: Text("Bienvenido"),
           )),
-      drawer: _drawer(),
+      drawer: _drawer(context),
       body: Center(
         child: _home(),
       ),
@@ -61,7 +63,7 @@ Widget _home() {
 
 
 
-Widget _drawer() {
+Widget _drawer(context) {
   return Drawer(
     child: ListView(
       children: <Widget>[
@@ -179,7 +181,10 @@ Widget _drawer() {
             "Cerrar sesión",
             style: TextStyle(fontSize: 20),
           ),
-          onTap: () {},
+          onTap: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => const LoginPage()));
+          },
         ),
       ],
     ),
