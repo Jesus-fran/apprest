@@ -3,6 +3,7 @@ import 'package:baseapp/modelos/user_model.dart';
 import 'package:baseapp/vistas/home.dart';
 import 'package:flutter/material.dart';
 import 'package:baseapp/controladores/registro.dart';
+import 'package:hive/hive.dart';
 
 class Cargando extends StatefulWidget {
   final UserModelo usuario;
@@ -26,7 +27,7 @@ class _CargandoState extends State<Cargando> {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
                     //Si se registra correctamente
-                    return succesMessage(context);
+                    return succesMessage(context, snapshot.data!.token);
                   } else if (snapshot.data!.statusCode == 200 &&
                       !snapshot.data!.status) {
                     //Si hubo un fallo al registrar
@@ -145,11 +146,17 @@ Widget errorMessage(context) {
   );
 }
 
-Widget succesMessage(context) {
+Widget succesMessage(context, token) {
+  var box = Hive.box('tokenBox');
+  box.put('token', token);
   return Column(
     children: [
       const SizedBox(height: 150),
-      const Text('Registrado correctamente..', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+      const Text(
+        'Registrado correctamente..',
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      ),
       const SizedBox(height: 60),
       const Icon(Icons.sentiment_satisfied_alt, size: 50),
       const SizedBox(height: 50),

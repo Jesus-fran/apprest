@@ -2,9 +2,8 @@ import 'package:baseapp/controladores/login.dart';
 import 'package:baseapp/modelos/register_model.dart';
 import 'package:baseapp/modelos/user_model.dart';
 import 'package:baseapp/vistas/home.dart';
-import 'package:baseapp/vistas/login_sesion.dart';
 import 'package:flutter/material.dart';
-import 'package:baseapp/controladores/registro.dart';
+import 'package:hive/hive.dart';
 
 class Logueando extends StatefulWidget {
   final UserModelo usuario;
@@ -27,7 +26,7 @@ class _LogueandoState extends State<Logueando> {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
                     //Si se loguea correctamente
-                    return succesMessage(context);
+                    return succesMessage(context, snapshot.data!.token);
                   } else if (snapshot.data!.statusCode == 200 &&
                       !snapshot.data!.status) {
                     //Si hubo un fallo al loguear
@@ -37,7 +36,8 @@ class _LogueandoState extends State<Logueando> {
                     return validationMessage(snapshot.data!.message, context);
                   } else {
                     //Si hay un error desconocido
-                    return errorMessage(context, 'Hubo un error al intentar iniciar sesión');
+                    return errorMessage(
+                        context, 'Hubo un error al intentar iniciar sesión');
                   }
                 } else {
                   return cargandoMessage(context);
@@ -146,19 +146,27 @@ Widget errorMessage(context, message) {
   );
 }
 
-Widget succesMessage(context) {
+Widget succesMessage(context, token) {
+  var box = Hive.box('tokenBox');
+  box.put('token', token);
   return Column(
     children: [
       const SizedBox(height: 150),
-      const Text('Iniciaste sesión correctamente..',
-          style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+      const Text(
+        'Iniciaste sesión correctamente..',
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      ),
       const SizedBox(height: 60),
       const Icon(Icons.sentiment_satisfied_alt, size: 50),
       const SizedBox(height: 50),
       ElevatedButton(
         onPressed: () {
           Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(builder: (context) => const Home()), (route) => false,);
+            context,
+            MaterialPageRoute(builder: (context) => const Home()),
+            (route) => false,
+          );
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(

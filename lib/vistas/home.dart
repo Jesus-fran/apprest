@@ -1,6 +1,6 @@
 import 'package:baseapp/main.dart';
-import 'package:baseapp/vistas/login_sesion.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,8 +10,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late final Box box;
+  @override
+  void initState() {
+    super.initState();
+    box = Hive.box('tokenBox');
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
@@ -25,7 +32,7 @@ class _HomeState extends State<Home> {
           title: const Center(
             child: Text("Bienvenido"),
           )),
-      drawer: _drawer(context),
+      drawer: _drawer(context, box),
       body: Center(
         child: _home(),
       ),
@@ -61,9 +68,7 @@ Widget _home() {
   );
 }
 
-
-
-Widget _drawer(context) {
+Widget _drawer(context, box) {
   return Drawer(
     child: ListView(
       children: <Widget>[
@@ -182,12 +187,13 @@ Widget _drawer(context) {
             style: TextStyle(fontSize: 20),
           ),
           onTap: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => const LoginPage()));
+            box.delete('token');
+            var token = box.get('token');
+            print(token);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
           },
         ),
       ],
     ),
   );
 }
-
