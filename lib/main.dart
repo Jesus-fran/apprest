@@ -16,6 +16,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   final Box tokenBox;
   const MyApp({super.key, required this.tokenBox});
 
