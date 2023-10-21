@@ -1,6 +1,6 @@
 import 'package:baseapp/controladores/login.dart';
-import 'package:baseapp/modelos/register_model.dart';
-import 'package:baseapp/modelos/user_model.dart';
+import 'package:baseapp/modelos/autenticacion_model.dart';
+import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/home.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -19,9 +19,9 @@ class _LogueandoState extends State<Logueando> {
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Center(
-          child: FutureBuilder<RegisterModelo>(
+          child: FutureBuilder<AuthModelo>(
               future: loginUser(widget.usuario.email, widget.usuario.password),
-              builder: (context, AsyncSnapshot<RegisterModelo> snapshot) {
+              builder: (context, AsyncSnapshot<AuthModelo> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
@@ -119,7 +119,7 @@ Widget errorMessage(context, message) {
       const SizedBox(height: 60),
       Text(
         message,
-        style: TextStyle(fontSize: 25),
+        style: const TextStyle(fontSize: 25),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 50),

@@ -1,45 +1,43 @@
-import 'package:baseapp/modelos/user_model.dart';
-import 'package:baseapp/vistas/cargando.dart';
+import 'package:baseapp/modelos/usuario_model.dart';
+import 'package:baseapp/vistas/logueando_usuario.dart';
 import 'package:flutter/material.dart';
 
-class RegisterRest extends StatefulWidget {
-  const RegisterRest({super.key});
+class LoginUser extends StatefulWidget {
+  const LoginUser({super.key});
 
   @override
-  RegisterRestState createState() => RegisterRestState();
+  LoginUserState createState() => LoginUserState();
 }
 
-class RegisterRestState extends State<RegisterRest> {
+class LoginUserState extends State<LoginUser> {
   final _formfield = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _repeatPasswordController =
-      TextEditingController();
   bool passwordHidden = true;
-  bool repeatPasswordHidden = true;
 
-  void _register() {
-    final name = _nameController.text;
+  void _login() {
     final email = _emailController.text;
     final password = _passwordController.text;
+
     final UserModelo usuario =
-        UserModelo(email: email, password: password, username: name);
+        UserModelo(email: email, password: password, username: '');
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Cargando(
+            builder: (context) => Logueando(
                   usuario: usuario,
                 )));
+    debugPrint("Correo: $email");
+    debugPrint("Contraseña: $password");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFF626B),
+        backgroundColor: const Color(0xFFFFF854),
         title: const Text(
-          'Crear cuenta',
+          'Iniciar sesión',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -53,7 +51,7 @@ class RegisterRestState extends State<RegisterRest> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/restaurante.png', width: 40),
+            child: Image.asset('assets/usuario.png', width: 40),
           ),
         ],
         shape: const RoundedRectangleBorder(
@@ -69,36 +67,10 @@ class RegisterRestState extends State<RegisterRest> {
           child: Form(
             key: _formfield,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
-                const Text('Nombre',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 4.0),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Image.asset('assets/usuario2.png',
-                          width: 20, height: 20),
-                    ),
-                    hintText: "Nombre",
-                    border: const OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    bool nameValid =
-                        RegExp(r"^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$").hasMatch(value!);
-                    if (value.isEmpty) {
-                      return "Ingrese un nombre";
-                    } else if (!nameValid) {
-                      return "Su nombre no debe tener caracteres especiales";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
                 const Text('Correo',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4.0),
@@ -111,7 +83,7 @@ class RegisterRestState extends State<RegisterRest> {
                       child: Image.asset('assets/correo.png',
                           width: 20, height: 20),
                     ),
-                    hintText: "Correo electrónico",
+                    hintText: "Correo",
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -127,7 +99,7 @@ class RegisterRestState extends State<RegisterRest> {
                     }
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 const Text('Contraseña',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4.0),
@@ -166,56 +138,20 @@ class RegisterRestState extends State<RegisterRest> {
                     }
                   },
                 ),
-                const SizedBox(height: 20),
-                const Text('Repetir contraseña',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 4.0),
-                TextFormField(
-                  controller: _repeatPasswordController,
-                  obscureText: repeatPasswordHidden,
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Image.asset('assets/password.png',
-                          width: 20, height: 20),
-                    ),
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          repeatPasswordHidden = !repeatPasswordHidden;
-                        });
-                      },
-                      child: Icon(repeatPasswordHidden
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                    ),
-                    hintText: "Repetir contraseña",
-                    border: const OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Repita su contraseña";
-                    } else if (value != _passwordController.text) {
-                      return "Las contraseñas deben coincidir";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 50),
                 ConstrainedBox(
                   constraints:
                       const BoxConstraints.tightFor(height: 50, width: 500),
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        debugPrint("validado correctamente");
-                        _register();
+                        debugPrint("Validado correctamente");
+                        _login();
                       }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFFFF626B)),
+                          const Color(0xFFFFF854)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),

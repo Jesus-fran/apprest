@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
 }
 
 
-
+//Interfaz principal
 Widget _home() {
   return Column(
     children: [
@@ -68,6 +68,7 @@ Widget _home() {
   );
 }
 
+//Interfaz desplegable
 Widget _drawer(context, box) {
   return Drawer(
     child: ListView(
@@ -189,7 +190,7 @@ Widget _drawer(context, box) {
           onTap: () {
             box.delete('token');
             var token = box.get('token');
-            print(token);
+            debugPrint(token);
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
           },
         ),

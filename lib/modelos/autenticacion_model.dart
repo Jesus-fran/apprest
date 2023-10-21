@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-RegisterModelo registerModeloFromJson(String str) =>
-    RegisterModelo.fromJson(json.decode(str));
+AuthModelo authModeloFromJson(String str) =>
+    AuthModelo.fromJson(json.decode(str));
 
-String registerModeloToJson(RegisterModelo data) => json.encode(data.toJson());
+String authModeloToJson(AuthModelo data) => json.encode(data.toJson());
 
-class RegisterModelo {
+class AuthModelo {
   int statusCode;
   bool status;
   String message;
   dynamic user;
   String token;
 
-  RegisterModelo({
+  AuthModelo({
     this.statusCode = 0,
     this.status = false,
     this.message = '',
@@ -20,8 +20,8 @@ class RegisterModelo {
     this.token = '',
   });
 
-  factory RegisterModelo.fromJson(Map<String, dynamic> json) {
-    return RegisterModelo(
+  factory AuthModelo.fromJson(Map<String, dynamic> json) {
+    return AuthModelo(
       statusCode:
           json["statusCode"] ?? 0, // Usa 0 como valor predeterminado si es nulo
       status: json["status"] ??

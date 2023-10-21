@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'register_user.dart'; // Importas la página de registro de usuario
-import 'register_rest.dart'; // Importas la página de registro de restaurante
+import 'registrar_usuario.dart'; // Importas la página de registro de restaurante
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Bienvenida extends StatelessWidget {
+  const Bienvenida({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +11,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterPage(),
+      home: const BienvenidaPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class BienvenidaPage extends StatelessWidget {
+  const BienvenidaPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +104,7 @@ class RegisterPage extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const RegisterUser(),
-                                  ),
-                                );
+                                //
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFFFF854),
@@ -137,7 +131,8 @@ class RegisterPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const RegisterRest(),
+                                    builder: (context) =>
+                                        const RegistrarUsuario(),
                                   ),
                                 );
                               },

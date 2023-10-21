@@ -1,28 +1,28 @@
-import 'package:baseapp/modelos/register_model.dart';
-import 'package:baseapp/modelos/user_model.dart';
+import 'package:baseapp/modelos/autenticacion_model.dart';
+import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/home.dart';
 import 'package:flutter/material.dart';
 import 'package:baseapp/controladores/registro.dart';
 import 'package:hive/hive.dart';
 
-class Cargando extends StatefulWidget {
+class RegistrandoUsuario extends StatefulWidget {
   final UserModelo usuario;
-  const Cargando({super.key, required this.usuario});
+  const RegistrandoUsuario({super.key, required this.usuario});
   @override
-  State<Cargando> createState() => _CargandoState();
+  State<RegistrandoUsuario> createState() => _RegistrandoUsuarioState();
 }
 
-class _CargandoState extends State<Cargando> {
+class _RegistrandoUsuarioState extends State<RegistrandoUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Center(
-          child: FutureBuilder<RegisterModelo>(
+          child: FutureBuilder<AuthModelo>(
               future: registerUser(widget.usuario.email,
                   widget.usuario.password, widget.usuario.username),
-              builder: (context, AsyncSnapshot<RegisterModelo> snapshot) {
+              builder: (context, AsyncSnapshot<AuthModelo> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
