@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
-        home: const LoginPage(),
+        home: const LoginPage(), //Cambiar esta función para probar nuevas interfaces
         debugShowCheckedModeBanner: false,
       );
     }

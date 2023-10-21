@@ -1,25 +1,14 @@
+import 'package:baseapp/vistas/home.dart';
 import 'package:flutter/material.dart';
-import 'registrar_usuario.dart'; // Importas la página de registro de restaurante
 
-class Bienvenida extends StatelessWidget {
+class Bienvenida extends StatefulWidget {
   const Bienvenida({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mi aplicación',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const BienvenidaPage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  State<Bienvenida> createState() => _BienvenidaState();
 }
 
-class BienvenidaPage extends StatelessWidget {
-  const BienvenidaPage({super.key});
-
+class _BienvenidaState extends State<Bienvenida> {
   @override
   Widget build(BuildContext context) {
     // Convertir cm a pixels, asumiendo una resolución de 150 ppi (aproximado)
@@ -92,65 +81,45 @@ class BienvenidaPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      "¡Hola! Te damos la bienvenida a Perfect Connection. A continuación elige el tipo de registro que quieres realizar.",
-                      style: TextStyle(fontSize: 13.5),
+                      "¡Hola! Te damos la bienvenida a Perfect Connection. A continuación puedes navegar y buscar lo  que te interesa.",
+                      style: TextStyle(fontSize: 18),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(height: cmToPx(0.8)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                //
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFFFF854),
-                                fixedSize: Size(cmToPx(2), cmToPx(2)),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                              child: Image.asset(
-                                "assets/usuario.png",
-                                width: cmToPx(3.0),
-                                height: cmToPx(3.0),
-                              ),
-                            ),
-                            const SizedBox(height: 5.0),
-                            const Text("Usuario")
-                          ],
-                        ),
                         SizedBox(width: cmToPx(0.2)),
                         Column(
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegistrarUsuario(),
-                                  ),
-                                );
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Home()));
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFFF626B),
-                                fixedSize: Size(cmToPx(2), cmToPx(2)),
+                                fixedSize: const Size.fromHeight(50),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
-                              child: Image.asset(
-                                "assets/restaurante.png",
-                                width: cmToPx(3.0),
-                                height: cmToPx(3.0),
-                              ),
+                              child: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.restaurant),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Explorar',
+                                      style: TextStyle(fontSize: 18),
+                                    )
+                                  ]),
                             ),
-                            const SizedBox(height: 5.0),
-                            const Text("Restaurante")
                           ],
                         ),
                       ],

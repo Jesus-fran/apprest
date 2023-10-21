@@ -1,6 +1,6 @@
 import 'package:baseapp/modelos/autenticacion_model.dart';
 import 'package:baseapp/modelos/usuario_model.dart';
-import 'package:baseapp/vistas/home.dart';
+import 'package:baseapp/vistas/bienvenida.dart';
 import 'package:flutter/material.dart';
 import 'package:baseapp/controladores/registro.dart';
 import 'package:hive/hive.dart';
@@ -163,7 +163,7 @@ Widget succesMessage(context, token) {
       ElevatedButton(
         onPressed: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => const Home()));
+              context, MaterialPageRoute(builder: (context) => const Bienvenida()));
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
