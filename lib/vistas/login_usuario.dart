@@ -14,6 +14,7 @@ class LoginUserState extends State<LoginUser> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool passwordHidden = true;
+  bool _terminos = false;
 
   void _login() {
     final email = _emailController.text;
@@ -138,6 +139,43 @@ class LoginUserState extends State<LoginUser> {
                     }
                   },
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      isError: true,
+                      value: _terminos,
+                      onChanged: (bool? newVal) {
+                        setState(() {
+                          _terminos = newVal!;
+                        });
+                      },
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.transparent;
+                        }
+                        return Colors.transparent;
+                      }),
+                      checkColor: Colors.black,
+                    ),
+                    const Text(
+                      'Acepto los',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Términos y condiciones',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ],
+                ),
                 const SizedBox(height: 50),
                 ConstrainedBox(
                   constraints:
@@ -145,8 +183,20 @@ class LoginUserState extends State<LoginUser> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        debugPrint("Validado correctamente");
-                        _login();
+                        if (_terminos) {
+                          debugPrint("Validado correctamente");
+                          _login();
+                        } else {
+                          debugPrint('Error!!');
+                          SnackBar snack_1 = const SnackBar(
+                            content: Text(
+                              "Acepte los términos y condiciones.",
+                              style: TextStyle(color: Colors.redAccent, fontSize: 16),
+                            ),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snack_1);
+                        }
                       }
                     },
                     style: ButtonStyle(
