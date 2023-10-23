@@ -1,5 +1,6 @@
 import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/logueando_usuario.dart';
+import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
 class LoginUser extends StatefulWidget {
@@ -166,7 +167,13 @@ class LoginUserState extends State<LoginUser> {
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TerminosCondiciones()),
+                          );
+                        },
                         child: const Text(
                           'Términos y condiciones',
                           style: TextStyle(
@@ -191,7 +198,8 @@ class LoginUserState extends State<LoginUser> {
                           SnackBar snack_1 = const SnackBar(
                             content: Text(
                               "Acepte los términos y condiciones.",
-                              style: TextStyle(color: Colors.redAccent, fontSize: 16),
+                              style: TextStyle(
+                                  color: Colors.redAccent, fontSize: 16),
                             ),
                             duration: Duration(seconds: 1),
                           );

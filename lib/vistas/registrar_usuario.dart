@@ -1,5 +1,6 @@
 import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/registrando_usuario.dart';
+import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
 class RegistrarUsuario extends StatefulWidget {
@@ -230,7 +231,14 @@ class RegistrarUsuarioState extends State<RegistrarUsuario> {
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const TerminosCondiciones()),
+                          );
+                        },
                         child: const Text(
                           'Términos y condiciones',
                           style: TextStyle(
