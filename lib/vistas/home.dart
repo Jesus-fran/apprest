@@ -16,33 +16,27 @@ class _HomeState extends State<Home> {
     super.initState();
     box = Hive.box('tokenBox');
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-          ),
           backgroundColor: const Color(0xFFFFF854),
           title: const Center(
-            child: Text("Bienvenido"),
+            child: Text("Home"),
           )),
       drawer: _drawer(context, box),
       body: Center(
-        child: _home(),
+        child: _home(box),
       ),
     );
   }
 }
 
-
-
-Widget _home() {
+Widget _home(box) {
+String username = box.get('username');
+  String saludo = 'Bienvenido $username';
   return Column(
     children: [
       const Divider(
@@ -53,9 +47,13 @@ Widget _home() {
           child: RefreshIndicator(
               child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                children: const [
+                children: [
+                  const SizedBox(height: 150),
                   Center(
-                    child: Text("Hola"),
+                    child: Text(
+                      saludo,
+                      style: const TextStyle(fontSize: 30),
+                    ),
                   )
                 ],
               ),
@@ -190,7 +188,8 @@ Widget _drawer(context, box) {
             box.delete('token');
             var token = box.get('token');
             print(token);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginPage()));
           },
         ),
       ],

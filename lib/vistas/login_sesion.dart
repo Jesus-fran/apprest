@@ -2,7 +2,7 @@ import 'package:baseapp/modelos/user_model.dart';
 import 'package:baseapp/vistas/logueando_twitter.dart';
 import 'package:baseapp/vistas/logueando.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_login/twitter_login.dart';
+import 'package:flutter_social_button/flutter_social_button.dart';
 
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
@@ -12,10 +12,6 @@ class LoginUser extends StatefulWidget {
 }
 
 class LoginUserState extends State<LoginUser> {
-  final String apiKey = '7e4RCvlyuPgZvfVeDtiTqn8Qr';
-  final String apiSecretKey =
-      'qsSKShrywBU2Dwp7lNEMgpYvqFdzcaBYIdPFPk79NfmGRX5r1S';
-
   final _formfield = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -173,7 +169,7 @@ class LoginUserState extends State<LoginUser> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -194,29 +190,16 @@ class LoginUserState extends State<LoginUser> {
                     ),
                   ],
                 ),
-                ConstrainedBox(
-                  constraints:
-                      const BoxConstraints.tightFor(height: 50, width: 500),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      //loginV2(apiKey, apiSecretKey);
-                      login(context, apiKey, apiSecretKey);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 87, 123, 190)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                    ),
-                    child: const Text(
-                      'Twitter',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                FlutterSocialButton(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LogueandoTwitter()));
+                  },
+                  buttonType: ButtonType.twitter,
+                  title:
+                      'Ingresar con Twitter', // Button type for different type buttons
                 ),
               ],
             ),
@@ -224,54 +207,5 @@ class LoginUserState extends State<LoginUser> {
         ),
       ),
     );
-  }
-}
-
-/// Use Twitter API v1.1
-Future login(context, apiKey, apiSecretKey) async {
-  final twitterLogin = TwitterLogin(
-    /// Consumer API keys
-    apiKey: apiKey,
-
-    /// Consumer API Secret keys
-    apiSecretKey: apiSecretKey,
-
-    redirectURI: 'flutter-twitter-login://',
-  );
-
-  final authResult = await twitterLogin.login();
-  switch (authResult.status) {
-    case TwitterLoginStatus.loggedIn:
-      // success
-      debugPrint('====== Login success ======');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => LogueandoTwitter(
-                    username: authResult.user!.name,
-                    status: true,
-                  )));
-      break;
-    case TwitterLoginStatus.cancelledByUser:
-      // cancel
-      debugPrint('====== Login cancel ======');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const LogueandoTwitter(
-                    username: '',
-                    status: false,
-                  )));
-      break;
-    case TwitterLoginStatus.error:
-    case null:
-      // error
-      debugPrint('====== Login error ======');
-      MaterialPageRoute(
-          builder: (context) => const LogueandoTwitter(
-                username: '',
-                status: false,
-              ));
-      break;
   }
 }

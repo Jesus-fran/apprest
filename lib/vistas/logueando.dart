@@ -119,7 +119,7 @@ Widget errorMessage(context, message) {
       const SizedBox(height: 60),
       Text(
         message,
-        style: TextStyle(fontSize: 25),
+        style: const TextStyle(fontSize: 25),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 50),
