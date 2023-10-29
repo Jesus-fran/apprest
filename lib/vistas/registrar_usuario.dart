@@ -1,5 +1,7 @@
 import 'package:baseapp/modelos/usuario_model.dart';
+import 'package:baseapp/vistas/politicas_privacidad.dart';
 import 'package:baseapp/vistas/registrando_usuario.dart';
+import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
 class RegistrarUsuario extends StatefulWidget {
@@ -18,6 +20,7 @@ class RegistrarUsuarioState extends State<RegistrarUsuario> {
       TextEditingController();
   bool passwordHidden = true;
   bool repeatPasswordHidden = true;
+  bool _terminos = false;
 
   void _register() {
     final name = _nameController.text;
@@ -202,6 +205,72 @@ class RegistrarUsuarioState extends State<RegistrarUsuario> {
                     }
                   },
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      isError: true,
+                      value: _terminos,
+                      onChanged: (bool? newVal) {
+                        setState(() {
+                          _terminos = newVal!;
+                        });
+                      },
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.transparent;
+                        }
+                        return Colors.transparent;
+                      }),
+                      checkColor: Colors.black,
+                    ),
+                    const Text(
+                      'Acepto los',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TerminosCondiciones()),
+                              );
+                            },
+                            child: const Text(
+                              'Términos y condiciones',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                    const Text(
+                      'y las',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PoliticasPrivacidad()),
+                              );
+                            },
+                            child: const Text(
+                              'Políticas de Privacidad',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                  ],
+                ),
                 const SizedBox(height: 30),
                 ConstrainedBox(
                   constraints:
@@ -209,8 +278,20 @@ class RegistrarUsuarioState extends State<RegistrarUsuario> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        debugPrint("validado correctamente");
-                        _register();
+                        if (_terminos) {
+                          debugPrint("validado correctamente");
+                          _register();
+                        } else {
+                          SnackBar snack_1 = const SnackBar(
+                            content: Text(
+                              "Acepte los términos y condiciones.",
+                              style: TextStyle(
+                                  color: Colors.redAccent, fontSize: 16),
+                            ),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snack_1);
+                        }
                       }
                     },
                     style: ButtonStyle(
@@ -230,27 +311,6 @@ class RegistrarUsuarioState extends State<RegistrarUsuario> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.grey,
-                        height: 1,
-                        margin: const EdgeInsets.only(right: 5),
-                      ),
-                    ),
-                    const Text("O"),
-                    Expanded(
-                      child: Container(
-                        color: Colors.grey,
-                        height: 1,
-                        margin: const EdgeInsets.only(left: 5),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

@@ -1,5 +1,7 @@
 import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/logueando_usuario.dart';
+import 'package:baseapp/vistas/politicas_privacidad.dart';
+import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
 class LoginUser extends StatefulWidget {
@@ -14,6 +16,7 @@ class LoginUserState extends State<LoginUser> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool passwordHidden = true;
+  bool _terminos = false;
 
   void _login() {
     final email = _emailController.text;
@@ -138,6 +141,72 @@ class LoginUserState extends State<LoginUser> {
                     }
                   },
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      isError: true,
+                      value: _terminos,
+                      onChanged: (bool? newVal) {
+                        setState(() {
+                          _terminos = newVal!;
+                        });
+                      },
+                      fillColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.transparent;
+                        }
+                        return Colors.transparent;
+                      }),
+                      checkColor: Colors.black,
+                    ),
+                    const Text(
+                      'Acepto los',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TerminosCondiciones()),
+                              );
+                            },
+                            child: const Text(
+                              'Términos y condiciones',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                    const Text(
+                      'y las',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PoliticasPrivacidad()),
+                              );
+                            },
+                            child: const Text(
+                              'Políticas de Privacidad',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                  ],
+                ),
                 const SizedBox(height: 50),
                 ConstrainedBox(
                   constraints:
@@ -145,8 +214,21 @@ class LoginUserState extends State<LoginUser> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formfield.currentState!.validate()) {
-                        debugPrint("Validado correctamente");
-                        _login();
+                        if (_terminos) {
+                          debugPrint("Validado correctamente");
+                          _login();
+                        } else {
+                          debugPrint('Error!!');
+                          SnackBar snack_1 = const SnackBar(
+                            content: Text(
+                              "Acepte los términos y condiciones.",
+                              style: TextStyle(
+                                  color: Colors.redAccent, fontSize: 16),
+                            ),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snack_1);
+                        }
                       }
                     },
                     style: ButtonStyle(
@@ -188,6 +270,21 @@ class LoginUserState extends State<LoginUser> {
                     ),
                   ],
                 ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TerminosCondiciones()),
+                      );
+                    },
+                    child: const Text(
+                      '',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    )),
               ],
             ),
           ),
