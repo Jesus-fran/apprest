@@ -1,5 +1,6 @@
 import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/logueando_usuario.dart';
+import 'package:baseapp/vistas/politicas_privacidad.dart';
 import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
@@ -166,21 +167,44 @@ class LoginUserState extends State<LoginUser> {
                       'Acepto los',
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TerminosCondiciones()),
-                          );
-                        },
-                        child: const Text(
-                          'Términos y condiciones',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        )),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TerminosCondiciones()),
+                              );
+                            },
+                            child: const Text(
+                              'Términos y condiciones',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                    const Text(
+                      'y las',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PoliticasPrivacidad()),
+                              );
+                            },
+                            child: const Text(
+                              'Políticas de Privacidad',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ))),
                   ],
                 ),
                 const SizedBox(height: 50),
@@ -246,6 +270,21 @@ class LoginUserState extends State<LoginUser> {
                     ),
                   ],
                 ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TerminosCondiciones()),
+                      );
+                    },
+                    child: const Text(
+                      '',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    )),
               ],
             ),
           ),
