@@ -1,6 +1,6 @@
 # baseapp
 
-A new Flutter project.
+Rama de desarrollo para integración continua.
 
 ## Getting Started
 
