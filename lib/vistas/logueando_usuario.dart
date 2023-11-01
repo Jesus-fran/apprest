@@ -149,40 +149,16 @@ Widget errorMessage(context, message) {
 Widget succesMessage(context, token) {
   var box = Hive.box('tokenBox');
   box.put('token', token);
-  return Column(
-    children: [
-      const SizedBox(height: 150),
-      const Text(
-        'Iniciaste sesión correctamente..',
-        style: TextStyle(fontSize: 30),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 60),
-      const Icon(Icons.sentiment_satisfied_alt, size: 50),
-      const SizedBox(height: 50),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const Home()),
-            (route) => false,
-          );
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 255, 239, 98)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-        ),
-        child: const Text(
-          "Continuar",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ],
-  );
+
+  // Con WidgetsBinding.instance.addPostFrameCallback() evitamos que ocurra un error
+  // al intentar redirigir a una interfaz desde el builder, aseguramos que eso ocurra
+  // hasta que se haya construido todo.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false);
+  });
+
+  return Container();
 }
