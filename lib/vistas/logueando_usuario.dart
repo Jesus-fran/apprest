@@ -69,120 +69,68 @@ Widget cargandoMessage(context) {
 }
 
 Widget validationMessage(String message, context) {
-  return Column(
-    children: [
-      const SizedBox(height: 150),
-      const Text('Algo ocurrió..', style: TextStyle(fontSize: 30)),
-      const SizedBox(height: 60),
-      const Icon(Icons.sentiment_dissatisfied, size: 50),
-      const SizedBox(height: 60),
-      Text(
-        message,
-        style: const TextStyle(fontSize: 25),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 50),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 255, 156, 98)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
+  void showAutoSnackBar(BuildContext context) {
+    // Muestra si hay un error de validación
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      SnackBar snack_1 = SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.redAccent, fontSize: 18),
+          textAlign: TextAlign.center,
         ),
-        child: const Text(
-          "Intentar de nuevo",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ],
-  );
+        duration: const Duration(seconds: 15),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snack_1);
+    });
+  }
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pop(context);
+  });
+
+  showAutoSnackBar(context);
+
+  return Container();
 }
 
 Widget errorMessage(context, message) {
-  return Column(
-    children: [
-      const SizedBox(height: 150),
-      const Text('Algo ocurrió..', style: TextStyle(fontSize: 30)),
-      const SizedBox(height: 60),
-      const Icon(
-        Icons.error,
-        size: 50,
-        color: Colors.redAccent,
-      ),
-      const SizedBox(height: 60),
-      Text(
-        message,
-        style: const TextStyle(fontSize: 25),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 50),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 255, 156, 98)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
+  void showAutoSnackBar(BuildContext context) {
+    // Muestra si hay un error de validación
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      SnackBar snack_1 = SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.redAccent, fontSize: 18),
+          textAlign: TextAlign.center,
         ),
-        child: const Text(
-          "Intentar de nuevo",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ],
-  );
+        duration: const Duration(seconds: 15),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snack_1);
+    });
+  }
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pop(context);
+  });
+
+  showAutoSnackBar(context);
+
+  return Container();
 }
 
 Widget succesMessage(context, token) {
   var box = Hive.box('tokenBox');
   box.put('token', token);
-  return Column(
-    children: [
-      const SizedBox(height: 150),
-      const Text(
-        'Iniciaste sesión correctamente..',
-        style: TextStyle(fontSize: 30),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 60),
-      const Icon(Icons.sentiment_satisfied_alt, size: 50),
-      const SizedBox(height: 50),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const Home()),
-            (route) => false,
-          );
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 255, 239, 98)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-        ),
-        child: const Text(
-          "Continuar",
-          style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ],
-  );
+
+  // Con WidgetsBinding.instance.addPostFrameCallback() evitamos que ocurra un error
+  // al intentar redirigir a una interfaz desde el builder, aseguramos que eso ocurra
+  // hasta que se haya construido todo.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false);
+  });
+
+  return Container();
 }
