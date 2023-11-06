@@ -1,6 +1,7 @@
 import 'package:baseapp/modelos/usuario_model.dart';
 import 'package:baseapp/vistas/logueando_usuario.dart';
 import 'package:baseapp/vistas/politicas_privacidad.dart';
+import 'package:baseapp/vistas/recuperar_password.dart';
 import 'package:baseapp/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +72,7 @@ class LoginUserState extends State<LoginUser> {
             key: _formfield,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 15),
                 const Text('Correo',
@@ -270,16 +271,18 @@ class LoginUserState extends State<LoginUser> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 70),
                 TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TerminosCondiciones()),
+                            builder: (context) => const RecuperarPassword()),
                       );
                     },
                     child: const Text(
-                      '',
+                      'Olvidé mi contraseña',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
