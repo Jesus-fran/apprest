@@ -1,6 +1,7 @@
 import 'package:baseapp/vistas/home.dart';
 import 'package:baseapp/vistas/registrar_usuario.dart';
 import 'package:flutter/material.dart';
+import 'package:gdpr_dialog/gdpr_dialog.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'vistas/login_usuario.dart'; // Importamos la vista
@@ -54,6 +55,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    GdprDialog.instance.showDialog(
+        isForTest: true, testDeviceId: '63BFF6BBDA6E9DD23473C4AF6E836A6D');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.9;
