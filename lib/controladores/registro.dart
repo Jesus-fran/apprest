@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:baseapp/modelos/autenticacion_model.dart';
 import 'package:http/http.dart' as http;
 
-String url = 'http://5ba9-201-153-54-81.ngrok-free.app/api/register';
+String url = 'https://0fb7-187-171-251-22.ngrok-free.app/api/register';
 
 Future<AuthModelo> registerUser(
     String email, String password, String username) async {
