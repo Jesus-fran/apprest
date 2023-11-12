@@ -14,7 +14,5 @@ Future<AuthModelo> loginUser(
   String body = utf8.decode(response.bodyBytes);
   final jsonData = authModeloFromJson(body);
   jsonData.statusCode = response.statusCode;
-  print(body);
-  print(response.statusCode);
   return jsonData;
 }

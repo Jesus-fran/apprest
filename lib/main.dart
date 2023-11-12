@@ -1,4 +1,4 @@
-import 'package:baseapp/vistas/home.dart';
+import 'package:baseapp/vistas/home_pages.dart';
 import 'package:baseapp/vistas/registrar_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:gdpr_dialog/gdpr_dialog.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: const Home(),
+      home: const HomePages(),
       debugShowCheckedModeBanner: false,
     );
   }

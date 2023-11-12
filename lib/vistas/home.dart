@@ -5,15 +5,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text("Hola"),
-      // child: ElevatedButton(
-      //   onPressed: () {
-      //     // Agrega aquí la lógica que desees para el contenido principal de Home
-      //     print("Botón presionado en HomeContent");
-      //   },
-      //   child: const Text("Contenido Principal de Home"),
-      // ),
     );
   }
 }

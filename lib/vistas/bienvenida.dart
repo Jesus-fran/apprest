@@ -1,4 +1,4 @@
-import 'package:baseapp/vistas/home.dart';
+import 'package:baseapp/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
 class Bienvenida extends StatefulWidget {
@@ -97,7 +97,7 @@ class _BienvenidaState extends State<Bienvenida> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Home()));
+                                        builder: (context) => const HomePages()));
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFFF626B),

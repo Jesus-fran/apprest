@@ -1,7 +1,7 @@
 import 'package:baseapp/controladores/login.dart';
 import 'package:baseapp/modelos/autenticacion_model.dart';
 import 'package:baseapp/modelos/usuario_model.dart';
-import 'package:baseapp/vistas/home.dart';
+import 'package:baseapp/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -128,7 +128,7 @@ Widget succesMessage(context, token) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => const HomePages()),
         (route) => false);
   });
 
