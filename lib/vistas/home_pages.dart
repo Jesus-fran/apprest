@@ -1,4 +1,6 @@
+import 'package:baseapp/main.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'home.dart';
 import 'planes.dart';
 
@@ -8,15 +10,16 @@ class HomePages extends StatefulWidget {
   const HomePages({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
-  _HomePagesState createState() => _HomePagesState();
+  HomePagesState createState() => HomePagesState();
 }
 
-class _HomePagesState extends State<HomePages> {
+class HomePagesState extends State<HomePages> {
   int _selectedIndex = 0;
+  late final Box box;
 
   final List<Widget> _screens = [
     const Home(),
-    Planes(),
+    const Planes(),
     // Agrega más vistas según sea necesario
   ];
 
@@ -24,6 +27,8 @@ class _HomePagesState extends State<HomePages> {
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
+    super.initState();
+    box = Hive.box('tokenBox');
   }
 
   void navigateToIndex(int index) {
@@ -37,13 +42,13 @@ class _HomePagesState extends State<HomePages> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Perfect Conection"),
-        backgroundColor: Color(0xFFFFF854),
+        backgroundColor: const Color(0xFFFFF854),
       ),
       body: Container(
-        color: Color.fromARGB(255, 215, 214, 214),
+        color: Colors.white,
         child: _screens[_selectedIndex],
       ),
-      drawer: Container(
+      drawer: SizedBox(
         width: 250, // Puedes ajustar este valor según tus necesidades
         child: _drawer(context),
       ),
@@ -53,8 +58,8 @@ class _HomePagesState extends State<HomePages> {
   Widget _drawer(BuildContext context) {
     return Drawer(
       child: Container(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 233, 233, 233),
+        decoration: const BoxDecoration(
+          color: Colors.white,
         ),
         child: ListView(
           children: <Widget>[
@@ -72,7 +77,7 @@ class _HomePagesState extends State<HomePages> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
+              leading: const Icon(Icons.home),
               title: const Text("Home"),
               onTap: () {
                 Navigator.pop(context);
@@ -80,11 +85,22 @@ class _HomePagesState extends State<HomePages> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.add),
+              leading: const Icon(Icons.add),
               title: const Text("Planes"),
               onTap: () {
                 Navigator.pop(context);
                 navigateToIndex(1);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text("Cerrar sesión"),
+              onTap: () {
+                box.delete('token');
+                var token = box.get('token');
+                debugPrint(token);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
               },
             ),
           ],
