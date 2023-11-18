@@ -1,4 +1,5 @@
 import 'package:baseapp/main.dart';
+import 'package:baseapp/vistas/registrar_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'home.dart';
@@ -17,10 +18,11 @@ class HomePagesState extends State<HomePages> {
   int _selectedIndex = 0;
   late final Box box;
 
+  // Vistas
   final List<Widget> _screens = [
     const Home(),
     const Planes(),
-    // Agrega más vistas según sea necesario
+    RegistrarRestaurante(),
   ];
 
   @override
@@ -45,11 +47,11 @@ class HomePagesState extends State<HomePages> {
         backgroundColor: const Color(0xFFFFF854),
       ),
       body: Container(
-        color: Colors.white,
+        color: Color.fromARGB(255, 241, 241, 241),
         child: _screens[_selectedIndex],
       ),
       drawer: SizedBox(
-        width: 250, // Puedes ajustar este valor según tus necesidades
+        width: 250,
         child: _drawer(context),
       ),
     );
@@ -90,6 +92,14 @@ class HomePagesState extends State<HomePages> {
               onTap: () {
                 Navigator.pop(context);
                 navigateToIndex(1);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.restaurant),
+              title: const Text("Crear restaurante"),
+              onTap: () {
+                Navigator.pop(context);
+                navigateToIndex(2);
               },
             ),
             ListTile(
