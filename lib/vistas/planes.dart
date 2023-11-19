@@ -1,10 +1,48 @@
+import 'package:baseapp/controladores/current_plan_controller.dart';
+import 'package:baseapp/modelos/plan_model.dart';
+import 'package:baseapp/vistas/cancelando_sub.dart';
+import 'package:baseapp/vistas/formulario_pago.dart';
+import 'package:baseapp/vistas/suscribiendo.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Planes extends StatelessWidget {
   const Planes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box('tokenBox');
+    var tokenUser = box.get('token');
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Center(
+          child: FutureBuilder<PlanModel>(
+              future: currentPlan(tokenUser),
+              builder: (context, AsyncSnapshot<PlanModel> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.status &&
+                      snapshot.data!.statusCode == 200) {
+                    // Si obtiene los datos correctamente
+                    return succesMessage(context, snapshot.data!.plan,
+                        snapshot.data!.card, tokenUser);
+                  } else {
+                    // Si hubo un fallo al obtener datos
+                    return errorMessage(context,
+                        "Hubo un error al conectarse con el servidor.");
+                  }
+                } else {
+                  return cargandoMessage(context);
+                }
+              }),
+        ),
+      ),
+    );
+  }
+
+  Widget succesMessage(
+      BuildContext context, String plan, bool card, String tokenUser) {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
@@ -37,51 +75,139 @@ class Planes extends StatelessWidget {
           child: Column(
             children: [
               MyCard(
-                title: 'Premium',
+                title: 'Basico mensual',
                 subtitle: 'Beneficios',
                 subitems: const [
                   'Listado en la plataforma',
                   'Espacios rotativos de publicidad',
                   'Soporte por correo'
                 ],
-                buttonText: 'Botón',
+                buttonText: plan == 'basicomen' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
-                  // Lógica para el botón
+                  if (plan == 'basicomen') {
+                    _showDialogCancel(
+                        context,
+                        '¿Estas seguro de terminar tu plan basico mensual?',
+                        tokenUser);
+                    return;
+                  }
+                  if (card) {
+                    print('Tienes una tarjeta registrada');
+                    _showDialogSuscribirse(
+                        context,
+                        '¿Quieres suscribirte al plan basico mensual?',
+                        tokenUser,
+                        'basicomen');
+                  } else {
+                    print('No tienes tarjeta');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FormularioPago(plan: 'basicomen'),
+                        ));
+                  }
                 },
-                buttonColor: Colors.black,
+                buttonColor: plan == 'basicomen' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
               ),
               MyCard(
-                title: 'Premium Anual',
+                title: 'Basico anual',
                 subtitle: 'Beneficios',
                 subitems: const ['xd', 'xd', 'xd'],
-                buttonText: 'Botón',
+                buttonText: plan == 'basicoanual' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
-                  // Lógica para el botón
+                  if (plan == 'basicoanual') {
+                    _showDialogCancel(
+                        context,
+                        '¿Estas seguro de terminar tu plan basico anual?',
+                        tokenUser);
+                    return;
+                  }
+                  if (card) {
+                    print('Tienes una tarjeta registrada');
+                    _showDialogSuscribirse(
+                        context,
+                        '¿Quieres suscribirte al plan basico anual?',
+                        tokenUser,
+                        'basicoanual');
+                  } else {
+                    print('No tienes tarjeta');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FormularioPago(plan: 'basicoanual'),
+                        ));
+                  }
                 },
-                buttonColor: Colors.black,
+                buttonColor: plan == 'basicoanual' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
               ),
               MyCard(
-                title: 'Premium Pro',
+                title: 'Premium mensual',
                 subtitle: 'Beneficios',
                 subitems: const ['xd', 'xd', 'xd'],
-                buttonText: 'Botón',
+                buttonText: plan == 'premiummen' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
-                  // Lógica para el botón
+                  if (plan == 'premiummen') {
+                    _showDialogCancel(
+                        context,
+                        '¿Estas seguro de terminar tu plan premium mensual?',
+                        tokenUser);
+                    return;
+                  }
+                  if (card) {
+                    print('Tienes una tarjeta registrada');
+                    _showDialogSuscribirse(
+                        context,
+                        '¿Quieres suscribirte al plan premium mensual?',
+                        tokenUser,
+                        'premiummen');
+                  } else {
+                    print('No tienes tarjeta');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FormularioPago(plan: 'premiummen'),
+                        ));
+                  }
                 },
-                buttonColor: Colors.black,
+                buttonColor: plan == 'premiummen' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
               ),
               MyCard(
-                title: 'Premium Pro Anual',
+                title: 'Premium anual',
                 subtitle: 'Subtitulo 3',
                 subitems: const ['xd', 'xd', 'xd'],
-                buttonText: 'Botón',
+                buttonText: plan == 'premiumanual' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
-                  // Lógica para el botón
+                  if (plan == 'premiumanual') {
+                    _showDialogCancel(
+                        context,
+                        '¿Estas seguro de terminar tu plan premium anual?',
+                        tokenUser);
+                    return;
+                  }
+                  if (card) {
+                    print('Tienes una tarjeta registrada');
+                    _showDialogSuscribirse(
+                        context,
+                        '¿Quieres suscribirte al plan premium anual?',
+                        tokenUser,
+                        'premiumanual');
+                  } else {
+                    print('No tienes tarjeta');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FormularioPago(plan: 'premiumanual'),
+                        ));
+                  }
                 },
-                buttonColor: Colors.black,
+                buttonColor: plan == 'premiumanual' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
               ),
             ],
@@ -94,6 +220,132 @@ class Planes extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget cargandoMessage(context) {
+    return const Column(
+      children: [
+        SizedBox(height: 200),
+        CircularProgressIndicator(
+          color: Colors.amberAccent,
+        ),
+        SizedBox(height: 60),
+      ],
+    );
+  }
+
+  Widget errorMessage(context, message) {
+    return Column(
+      children: [
+        const SizedBox(height: 200),
+        Text(
+          message,
+          style: const TextStyle(fontSize: 16),
+        ),
+        const SizedBox(height: 60),
+      ],
+    );
+  }
+
+  Future<void> _showDialogCancel(
+      BuildContext context, String msg, String tokenUser) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(msg),
+            content: const Text(
+                'Tu restaurante dejará de estar disponible, hasta que realices una nueva suscripción.'),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 228, 228, 228),
+                        foregroundColor: Colors.black,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    child: const Center(child: Text("Cerrar")),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 245, 69, 69),
+                        foregroundColor: Colors.white,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CancelandoSub(tokenUser: tokenUser),
+                          ));
+                      print('Cancelando suscripción...');
+                    },
+                    child: const Center(child: Text("Terminar plan")),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
+  Future<void> _showDialogSuscribirse(
+      BuildContext context, String msg, String tokenUser, String plan) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(msg),
+            content: const Text(
+                'Recuerda que para pagar esta suscripción utilizaremos tu método de pago que tienes predeterminado.'),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 228, 228, 228),
+                        foregroundColor: Colors.black,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    child: const Center(child: Text("Cerrar")),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 245, 69, 69),
+                        foregroundColor: Colors.white,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SuscribiendoUser(
+                                tokenUser: tokenUser,
+                                plan: plan,
+                                cardNew: false),
+                          ));
+                    },
+                    child: const Center(child: Text("Suscribirme")),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
   }
 }
 
