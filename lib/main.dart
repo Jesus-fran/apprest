@@ -1,6 +1,7 @@
 import 'package:baseapp/vistas/home_pages.dart';
 import 'package:baseapp/vistas/registrar_usuario.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:gdpr_dialog/gdpr_dialog.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,6 +12,9 @@ void main() async {
   final directoryCache = await getApplicationCacheDirectory();
   Hive.init(directoryCache.path);
   final tokenBox = await Hive.openBox('tokenBox');
+  Stripe.publishableKey =
+      'pk_test_51K4UY3AIicvw06NvdfFa6l4FL5DG1ZtXbRyqBcsy43Sd4XHdgjrShVBpWsOmE3uYXyFAdiiIwZnUSbognXEPRO9X00STeriSTo';
+  await Stripe.instance.applySettings();
   runApp(MyApp(
     tokenBox: tokenBox,
   ));

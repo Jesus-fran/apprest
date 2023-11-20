@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:baseapp/config.dart';
 import 'package:baseapp/modelos/autenticacion_model.dart';
 import 'package:http/http.dart' as http;
 
-String url = 'https://0fb7-187-171-251-22.ngrok-free.app/api/recovery-password';
+String url = '${Config.baseUrl}/api/recovery-password';
 
 Future<AuthModelo> recuperarPassword(String email) async {
   await Future.delayed(const Duration(seconds: 3));
