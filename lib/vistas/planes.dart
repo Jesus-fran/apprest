@@ -46,48 +46,110 @@ class Planes extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
+        const Text(
+          'Nuestros planes',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          '¿Eres restaurantero y quieres mejores ingresos o mayor visibilidad?',
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.justify,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Entonces elige un plan y accede a muchos beneficios.',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.justify,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Row(
+          children: [
+            Icon(
+              Icons.looks_one_rounded,
+              color: Color.fromARGB(255, 138, 8, 161),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text('Elige una suscripción', style: TextStyle(fontSize: 16)),
+          ],
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.looks_two_rounded,
+              color: Colors.blue[900],
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text('Realiza el pago correspondiente',
+                style: TextStyle(fontSize: 16)),
+          ],
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.looks_3_rounded,
+              color: Colors.green[600],
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text('Haz público tu restaurante',
+                style: TextStyle(fontSize: 16)),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            '¡Bienvenido! a la sección de crear Restaurante. Para continuar elija el tipo de plan que desea adquirir.',
-            style: TextStyle(
-              fontSize: 17,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const Divider(
-          height: 50,
-          color: Colors.transparent,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 25.0), // para el margen izquiero
-          child: Text(
-            'Nuestros planes',
+            '¡Comienza hoy!',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.left,
+            textAlign: TextAlign.justify,
           ),
+        ),
+        const Divider(
+          height: 10,
+          color: Colors.transparent,
         ),
         RefreshIndicator(
           child: Column(
             children: [
               MyCard(
-                title: 'Basico mensual',
+                title: 'Básico mensual',
                 subtitle: 'Beneficios',
                 subitems: const [
-                  'Listado en la plataforma',
+                  'Presencia dentro de la app',
                   'Espacios rotativos de publicidad',
-                  'Soporte por correo'
+                  'Reseñas y/o comentarios',
+                  'Soporte técnico',
                 ],
+                precio: '80.00 MXN',
                 buttonText: plan == 'basicomen' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
                   if (plan == 'basicomen') {
                     _showDialogCancel(
                         context,
-                        '¿Estas seguro de terminar tu plan basico mensual?',
+                        '¿Estás seguro de terminar tu plan básico mensual?',
                         tokenUser);
                     return;
                   }
@@ -95,7 +157,7 @@ class Planes extends StatelessWidget {
                     print('Tienes una tarjeta registrada');
                     _showDialogSuscribirse(
                         context,
-                        '¿Quieres suscribirte al plan basico mensual?',
+                        '¿Quieres suscribirte al plan básico mensual?',
                         tokenUser,
                         'basicomen');
                   } else {
@@ -110,17 +172,25 @@ class Planes extends StatelessWidget {
                 },
                 buttonColor: plan == 'basicomen' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
+                color: Colors.white70,
               ),
               MyCard(
-                title: 'Basico anual',
+                title: 'Básico anual',
                 subtitle: 'Beneficios',
-                subitems: const ['xd', 'xd', 'xd'],
+                subitems: const [
+                  'Presencia dentro de la app',
+                  'Espacios rotativos de publicidad',
+                  'Reseñas y/o comentarios',
+                  'Soporte técnico',
+                  'Descuento del 10% en comparación al plan mensual',
+                ],
+                precio: '864.00 MXN',
                 buttonText: plan == 'basicoanual' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
                   if (plan == 'basicoanual') {
                     _showDialogCancel(
                         context,
-                        '¿Estas seguro de terminar tu plan basico anual?',
+                        '¿Estás seguro de terminar tu plan básico anual?',
                         tokenUser);
                     return;
                   }
@@ -128,7 +198,7 @@ class Planes extends StatelessWidget {
                     print('Tienes una tarjeta registrada');
                     _showDialogSuscribirse(
                         context,
-                        '¿Quieres suscribirte al plan basico anual?',
+                        '¿Quieres suscribirte al plan básico anual?',
                         tokenUser,
                         'basicoanual');
                   } else {
@@ -143,17 +213,25 @@ class Planes extends StatelessWidget {
                 },
                 buttonColor: plan == 'basicoanual' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
+                color: Colors.yellow.shade200,
               ),
               MyCard(
                 title: 'Premium mensual',
                 subtitle: 'Beneficios',
-                subitems: const ['xd', 'xd', 'xd'],
+                subitems: const [
+                  'Mayor presencia dentro de la app',
+                  'Espacios exclusivos de publicidad',
+                  'Reseñas y/o comentarios',
+                  "galería de fotos",
+                  'Soporte técnico',
+                ],
+                precio: '150.00 MX',
                 buttonText: plan == 'premiummen' ? 'Cancelar' : 'Suscribirme',
                 onPressed: () {
                   if (plan == 'premiummen') {
                     _showDialogCancel(
                         context,
-                        '¿Estas seguro de terminar tu plan premium mensual?',
+                        '¿Estás seguro de terminar tu plan premium mensual?',
                         tokenUser);
                     return;
                   }
@@ -176,40 +254,51 @@ class Planes extends StatelessWidget {
                 },
                 buttonColor: plan == 'premiummen' ? Colors.red : Colors.black,
                 buttonTextColor: Colors.white,
+                color: Colors.orange.shade200,
               ),
               MyCard(
-                title: 'Premium anual',
-                subtitle: 'Subtitulo 3',
-                subitems: const ['xd', 'xd', 'xd'],
-                buttonText: plan == 'premiumanual' ? 'Cancelar' : 'Suscribirme',
-                onPressed: () {
-                  if (plan == 'premiumanual') {
-                    _showDialogCancel(
-                        context,
-                        '¿Estas seguro de terminar tu plan premium anual?',
-                        tokenUser);
-                    return;
-                  }
-                  if (card) {
-                    print('Tienes una tarjeta registrada');
-                    _showDialogSuscribirse(
-                        context,
-                        '¿Quieres suscribirte al plan premium anual?',
-                        tokenUser,
-                        'premiumanual');
-                  } else {
-                    print('No tienes tarjeta');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const FormularioPago(plan: 'premiumanual'),
-                        ));
-                  }
-                },
-                buttonColor: plan == 'premiumanual' ? Colors.red : Colors.black,
-                buttonTextColor: Colors.white,
-              ),
+                  title: 'Premium anual',
+                  subtitle: 'Beneficios',
+                  subitems: const [
+                    'Mayor presencia dentro de la app',
+                    'Espacios exclusivos de publicidad',
+                    'Reseñas y/o comentarios',
+                    'Soporte técnico',
+                    "Galería de fotos",
+                    'Descuento del 15% en comparación al plan premium mensual',
+                  ],
+                  precio: '1,530.00 MXN',
+                  buttonText:
+                      plan == 'premiumanual' ? 'Cancelar' : 'Suscribirme',
+                  onPressed: () {
+                    if (plan == 'premiumanual') {
+                      _showDialogCancel(
+                          context,
+                          '¿Estás seguro de terminar tu plan premium anual?',
+                          tokenUser);
+                      return;
+                    }
+                    if (card) {
+                      print('Tienes una tarjeta registrada');
+                      _showDialogSuscribirse(
+                          context,
+                          '¿Quieres suscribirte al plan premium anual?',
+                          tokenUser,
+                          'premiumanual');
+                    } else {
+                      print('No tienes tarjeta');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const FormularioPago(plan: 'premiumanual'),
+                          ));
+                    }
+                  },
+                  buttonColor:
+                      plan == 'premiumanual' ? Colors.red : Colors.black,
+                  buttonTextColor: Colors.white,
+                  color: Colors.orange.shade300),
             ],
           ),
           onRefresh: () {
@@ -354,31 +443,35 @@ class MyCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<String> subitems;
+  final String precio;
   final String buttonText;
   final VoidCallback onPressed;
   final Color buttonColor;
   final Color buttonTextColor;
+  final Color color;
 
   const MyCard({
     super.key,
     required this.title,
     required this.subtitle,
     required this.subitems,
+    required this.precio,
     required this.buttonText,
     required this.onPressed,
     required this.buttonColor,
     required this.buttonTextColor,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     const double titleFontSize = 22.0;
     const double subtitleFontSize = 15.0;
-    const double subitemsFontSize = 12.0;
+    const double subitemsFontSize = 16.0;
 
     return Card(
       margin: const EdgeInsets.all(25.0),
-      color: const Color.fromARGB(255, 255, 252, 161),
+      color: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0), // redondear bordrs
       ),
@@ -402,6 +495,7 @@ class MyCard extends StatelessWidget {
               subtitle,
               style: const TextStyle(
                 fontSize: subtitleFontSize,
+                fontWeight: FontWeight.bold,
                 height: 1.0,
               ),
             ),
@@ -411,15 +505,41 @@ class MyCard extends StatelessWidget {
               children: subitems
                   .map((item) => Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          '• $item',
-                          style: const TextStyle(
-                            fontSize: subitemsFontSize,
-                            height: 1.2,
+                        child: Row(children: [
+                          Icon(
+                            Icons.check,
+                            color: Colors.blue[800],
                           ),
-                        ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: subitemsFontSize,
+                              height: 1.2,
+                            ),
+                          ))
+                        ]),
                       ))
                   .toList(),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const Text(
+                  'Precio: ',
+                  style: TextStyle(
+                      fontSize: subtitleFontSize, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  precio,
+                  style: const TextStyle(
+                      fontSize: subtitleFontSize, fontWeight: FontWeight.bold),
+                )
+              ],
             ),
             const SizedBox(height: 10),
             Center(
