@@ -2,22 +2,20 @@ import 'package:baseapp/controladores/restaurant_controller.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
-class RegistrandoRestaurant extends StatefulWidget {
+class CreandoRestaurant extends StatefulWidget {
   final String tokenUser;
   final RestaurantModelo info;
-  final int id;
   final Function updateState;
-  const RegistrandoRestaurant(
+  const CreandoRestaurant(
       {super.key,
       required this.tokenUser,
       required this.info,
-      required this.id,
       required this.updateState});
   @override
-  State<RegistrandoRestaurant> createState() => _RegistrandoRestaurantState();
+  State<CreandoRestaurant> createState() => _CreandoRestaurantState();
 }
 
-class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
+class _CreandoRestaurantState extends State<CreandoRestaurant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +23,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
         padding: const EdgeInsets.all(30.0),
         child: Center(
           child: FutureBuilder<RestaurantModelo>(
-              future: updateRestaurantInfoBasic(
-                  widget.tokenUser, widget.info, widget.id),
+              future: createRestaurant(widget.tokenUser, widget.info),
               builder: (context, AsyncSnapshot<RestaurantModelo> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.statusCode == 200 &&
@@ -42,8 +39,8 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
                     return validationMessage(snapshot.data!.message!, context);
                   } else {
                     //Si hay un error desconocido
-                    return errorMessage(
-                        context, 'Hubo un error al intentar guardar cambios');
+                    return errorMessage(context,
+                        'Hubo un error al intentar crear el restaurante.');
                   }
                 } else {
                   return cargandoMessage(context);
@@ -58,7 +55,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
     return const Column(
       children: [
         SizedBox(height: 200),
-        Text('Guardando cambios..', style: TextStyle(fontSize: 30)),
+        Text('Creando restaurante..', style: TextStyle(fontSize: 30)),
         SizedBox(height: 60),
         LinearProgressIndicator(
           color: Colors.amberAccent,
@@ -91,6 +88,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pop(context);
+      Navigator.pop(context);
     });
 
     showAutoSnackBar(context);
@@ -116,6 +114,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pop(context);
+      Navigator.pop(context);
     });
 
     showAutoSnackBar(context);
@@ -125,7 +124,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
 
   Widget succesMessage(context, message) {
     void showAutoSnackBar(BuildContext context) {
-      // Muestra si hay un error de validación
+      // Muestra si todo fue bien
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SnackBar snack_1 = SnackBar(
           content: Text(
@@ -140,6 +139,7 @@ class _RegistrandoRestaurantState extends State<RegistrandoRestaurant> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pop(context);
       Navigator.pop(context);
       widget.updateState();
     });

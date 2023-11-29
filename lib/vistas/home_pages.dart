@@ -1,6 +1,7 @@
 import 'package:baseapp/main.dart';
-import 'package:baseapp/vistas/admin_restaurant.dart';
-import 'package:baseapp/vistas/registrar_restaurante.dart';
+import 'package:baseapp/modelos/restaurant_model.dart';
+import 'package:baseapp/vistas/creando_restaurant.dart';
+import 'package:baseapp/vistas/my_restaurants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'home.dart';
@@ -12,19 +13,22 @@ class HomePages extends StatefulWidget {
   const HomePages({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
-  HomePagesState createState() => HomePagesState();
+  _HomePagesState createState() => _HomePagesState();
 }
 
-class HomePagesState extends State<HomePages> {
+class _HomePagesState extends State<HomePages> {
   int _selectedIndex = 0;
   late final Box box;
+  final _formfield = GlobalKey<FormState>();
+  final TextEditingController _restaurantController = TextEditingController();
 
   // Vistas
-  final List<Widget> _screens = [
-    const Home(),
-    const Planes(),
-    const AdminRestaurant(),
-    RegistrarRestaurante(),
+  final List<Widget Function(VoidCallback)> _screens = [
+    (updateState) => const Home(),
+    (updateState) => const Planes(),
+    (updateState) => MyRestaurants(
+          onstateUpdate: updateState,
+        ),
   ];
 
   @override
@@ -50,12 +54,21 @@ class HomePagesState extends State<HomePages> {
       ),
       body: Container(
         color: const Color.fromARGB(255, 241, 241, 241),
-        child: _screens[_selectedIndex],
+        child: _screens[_selectedIndex](updateState),
       ),
       drawer: SizedBox(
         width: 250,
         child: _drawer(context),
       ),
+      floatingActionButton: _selectedIndex == 2
+          ? FloatingActionButton(
+              onPressed: () {
+                _showDialogNew(context);
+              },
+              backgroundColor: const Color(0xFFFFF854),
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 
@@ -119,5 +132,91 @@ class HomePagesState extends State<HomePages> {
         ),
       ),
     );
+  }
+
+  Future<void> _showDialogNew(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Nuevo restaurante'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Form(
+                    key: _formfield,
+                    child: TextFormField(
+                      controller: _restaurantController,
+                      autofocus: true,
+                      maxLength: 50,
+                      decoration:
+                          const InputDecoration(labelText: 'Restaurante'),
+                      validator: (value) {
+                        bool textValid =
+                            RegExp(r"^[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s¡!¿?.,]+$")
+                                .hasMatch(value!);
+                        if (!textValid && value != '') {
+                          return "No debe ingresar caracteres especiales";
+                        } else if (value == '') {
+                          return 'Ingrese el nombre de su restaurante.';
+                        } else if (value.length < 4) {
+                          return 'Ingrese al menos 4 caracteres.';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ))
+              ],
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 228, 228, 228),
+                        foregroundColor: Colors.black,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    child: const Center(child: Text("Cancelar")),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 245, 69, 69),
+                        foregroundColor: Colors.white,
+                        textStyle:
+                            const TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      if (_formfield.currentState!.validate()) {
+                        var tokenUser = box.get('token');
+                        String restaurant = _restaurantController.text;
+                        _restaurantController.clear();
+                        debugPrint("validado correctamente");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreandoRestaurant(
+                                  tokenUser: tokenUser,
+                                  info:
+                                      RestaurantModelo(restaurant: restaurant),
+                                  updateState: updateState),
+                            ));
+                      }
+                    },
+                    child: const Center(child: Text("Crear restaurante")),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
+  void updateState() {
+    setState(() {});
   }
 }

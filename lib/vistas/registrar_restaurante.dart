@@ -10,8 +10,10 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegistrarRestaurante extends StatefulWidget {
-  const RegistrarRestaurante({super.key});
-
+  final int id;
+  final Function updateState;
+  const RegistrarRestaurante(
+      {super.key, required this.id, required this.updateState});
   @override
   _RegistrarRestauranteState createState() => _RegistrarRestauranteState();
 }
@@ -63,26 +65,33 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Center(
-          child: FutureBuilder<RestaurantModelo>(
-              future: getRestaurantInfoBasic(tokenUser),
-              builder: (context, AsyncSnapshot<RestaurantModelo> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.statusCode == 301) {
-                    return const Text(
-                      'Compre una suscripción primero',
-                      style: TextStyle(fontSize: 18),
-                    );
-                  }
-                  return fomulario(snapshot.data!, tokenUser);
-                } else {
-                  return cargandoMessage(context);
-                }
-              }),
-        ),
-      ),
+      body: RefreshIndicator(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Center(
+              child: FutureBuilder<RestaurantModelo>(
+                  //OJO AQUI CONSULTAR AL RESTAURANT CON CIERTA ID
+                  future: getRestaurant(tokenUser, widget.id),
+                  builder: (context, AsyncSnapshot<RestaurantModelo> snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data!.statusCode == 403) {
+                        return Text(
+                          snapshot.data!.message!,
+                          style: const TextStyle(fontSize: 18),
+                        );
+                      }
+                      return fomulario(snapshot.data!, tokenUser);
+                    } else {
+                      return cargandoMessage(context);
+                    }
+                  }),
+            ),
+          ),
+          onRefresh: () {
+            return Future(() {
+              setState(() {});
+            });
+          }),
     );
   }
 
@@ -140,7 +149,7 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
                 alignment: Alignment.center,
                 children: [
                   _imageData != null
-                      ? Container(
+                      ? SizedBox(
                           height: 100,
                           width: double.infinity,
                           child: Image.memory(_imageData!, fit: BoxFit.cover),
@@ -224,7 +233,8 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
                 onPressed: () {
                   if (_formfield.currentState!.validate()) {
                     debugPrint("validado correctamente");
-                    String base64Image = base64Encode(_imageData!);
+                    String base64Image =
+                        _imageData != null ? base64Encode(_imageData!) : '';
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -235,7 +245,9 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
                                   restaurant: _nombreController.text,
                                   telefono: _telefonoController.text,
                                   tipo: seleccionActual,
-                                  descripcion: _descripcionController.text)),
+                                  descripcion: _descripcionController.text),
+                              id: widget.id,
+                              updateState: widget.updateState),
                         ));
                   }
                 },

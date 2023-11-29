@@ -8,6 +8,7 @@ String restaurantModeloToJson(RestaurantModelo data) =>
 
 class RestaurantModelo {
   int? statusCode;
+  int? id_restaurant;
   String? restaurant;
   String? logo;
   String? telefono;
@@ -21,6 +22,7 @@ class RestaurantModelo {
 
   RestaurantModelo({
     this.statusCode = 0,
+    this.id_restaurant = 0,
     this.restaurant = '',
     this.logo = '',
     this.telefono = '',
@@ -35,6 +37,7 @@ class RestaurantModelo {
 
   factory RestaurantModelo.fromJson(Map<String, dynamic> json) =>
       RestaurantModelo(
+          id_restaurant: json["id_restaurant"],
           restaurant: json["restaurant"],
           logo: json["logo"],
           telefono: json["telefono"],
@@ -49,6 +52,7 @@ class RestaurantModelo {
 
   Map<String, dynamic> toJson() => {
         "statusCode": statusCode,
+        "id_restaurant": id_restaurant,
         "restaurant": restaurant,
         "logo": logo,
         "telefono": telefono,

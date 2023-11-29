@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 241, 241, 241),
+      backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -26,9 +26,8 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               getSaludo(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15, // Modifica el tamaño del saludo
-
                 color: Colors.black,
               ),
             ),
@@ -43,10 +42,10 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.search,
                             color: Colors.grey,
@@ -68,13 +67,13 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 8.0),
+                  margin: const EdgeInsets.only(left: 8.0),
                   decoration: BoxDecoration(
                     color: Colors.yellow,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.tune,
                       color: Colors.black,
                     ),
