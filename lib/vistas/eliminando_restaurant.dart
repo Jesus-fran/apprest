@@ -1,46 +1,49 @@
 import 'package:baseapp/controladores/restaurant_controller.dart';
+import 'package:baseapp/modelos/autenticacion_model.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
+import 'package:baseapp/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
-class CreandoRestaurant extends StatefulWidget {
+class EliminandoRestaurant extends StatefulWidget {
   final String tokenUser;
   final RestaurantModelo info;
-  final Function updateState;
-  const CreandoRestaurant(
+  final String password;
+  const EliminandoRestaurant(
       {super.key,
       required this.tokenUser,
       required this.info,
-      required this.updateState});
+      required this.password});
   @override
-  State<CreandoRestaurant> createState() => _CreandoRestaurantState();
+  State<EliminandoRestaurant> createState() => _EliminandoRestaurantState();
 }
 
-class _CreandoRestaurantState extends State<CreandoRestaurant> {
+class _EliminandoRestaurantState extends State<EliminandoRestaurant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Center(
-          child: FutureBuilder<RestaurantModelo>(
-              future: createRestaurant(widget.tokenUser, widget.info),
-              builder: (context, AsyncSnapshot<RestaurantModelo> snapshot) {
+          child: FutureBuilder<AuthModelo>(
+              future: deleteRestaurant(
+                  widget.tokenUser, widget.info, widget.password),
+              builder: (context, AsyncSnapshot<AuthModelo> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.statusCode == 200 &&
-                      snapshot.data!.status!) {
+                      snapshot.data!.status) {
                     //Si guarda correctamente
                     return succesMessage(context, snapshot.data!.message);
                   } else if (snapshot.data!.statusCode == 200 &&
-                      !snapshot.data!.status!) {
+                      !snapshot.data!.status) {
                     //Si hubo un fallo al guardar
                     return errorMessage(context, snapshot.data!.message);
                   } else if (snapshot.data!.statusCode == 422) {
                     //Si hubo un error de validación
-                    return validationMessage(snapshot.data!.message!, context);
+                    return validationMessage(snapshot.data!.message, context);
                   } else {
                     //Si hay un error desconocido
                     return errorMessage(context,
-                        'Hubo un error al intentar crear el restaurante.');
+                        'Hubo un error al intentar eliminar el restaurante.');
                   }
                 } else {
                   return cargandoMessage(context);
@@ -56,7 +59,7 @@ class _CreandoRestaurantState extends State<CreandoRestaurant> {
       children: [
         SizedBox(height: 200),
         Text(
-          'Creando restaurante..',
+          'Eliminando restaurante..',
           style: TextStyle(
               fontSize: 30,
               color: Color.fromRGBO(47, 79, 79, 1),
@@ -145,9 +148,13 @@ class _CreandoRestaurantState extends State<CreandoRestaurant> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pop(context);
-      Navigator.pop(context);
-      widget.updateState();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePages(
+                    initialIndex: 2,
+                  )),
+          (route) => false);
     });
 
     showAutoSnackBar(context);
