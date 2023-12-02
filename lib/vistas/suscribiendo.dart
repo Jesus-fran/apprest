@@ -7,11 +7,13 @@ class SuscribiendoUser extends StatefulWidget {
   final String tokenUser;
   final String plan;
   final bool cardNew;
+  final String password;
   const SuscribiendoUser(
       {super.key,
       required this.tokenUser,
       required this.plan,
-      required this.cardNew});
+      required this.cardNew,
+      required this.password});
 
   @override
   State<SuscribiendoUser> createState() => _SuscribiendoUserState();
@@ -26,8 +28,10 @@ class _SuscribiendoUserState extends State<SuscribiendoUser> {
         child: Center(
           child: FutureBuilder<PaymentModel>(
               future: widget.cardNew
-                  ? tokenizarCard(widget.tokenUser, widget.plan)
-                  : suscribeUser('token_vacio', widget.tokenUser, widget.plan),
+                  ? tokenizarCard(
+                      widget.tokenUser, widget.plan, widget.password)
+                  : suscribeUser('token_vacio', widget.tokenUser, widget.plan,
+                      widget.password),
               builder: (context, AsyncSnapshot<PaymentModel> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.status) {
@@ -85,6 +89,9 @@ class _SuscribiendoUserState extends State<SuscribiendoUser> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pop(context);
+      if (!widget.cardNew) {
+        Navigator.pop(context);
+      }
     });
 
     showAutoSnackBar(context);
@@ -111,7 +118,10 @@ class _SuscribiendoUserState extends State<SuscribiendoUser> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomePages()),
+          MaterialPageRoute(
+              builder: (context) =>  HomePages(
+                    initialIndex: 2,
+                  )),
           (route) => false);
     });
     showAutoSnackBar(context);

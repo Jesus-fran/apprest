@@ -9,8 +9,13 @@ import 'planes.dart';
 
 class HomePages extends StatefulWidget {
   final int initialIndex;
+  bool subs;
 
-  const HomePages({Key? key, this.initialIndex = 0}) : super(key: key);
+  HomePages({Key? key, this.initialIndex = 0, this.subs = true})
+      : super(key: key);
+  HomePages getInstance() {
+    return this;
+  }
 
   @override
   _HomePagesState createState() => _HomePagesState();
@@ -23,13 +28,18 @@ class _HomePagesState extends State<HomePages> {
   final TextEditingController _restaurantController = TextEditingController();
 
   // Vistas
-  final List<Widget Function(VoidCallback)> _screens = [
-    (updateState) => const Home(),
-    (updateState) => const Planes(),
-    (updateState) => MyRestaurants(
-          onstateUpdate: updateState,
-        ),
-  ];
+
+  List<Widget Function(VoidCallback)> buildScreens() {
+    final List<Widget Function(VoidCallback)> _screens = [
+      (updateState) => const Home(),
+      (updateState) => Planes(updateState: updateState),
+      (updateState) => MyRestaurants(
+            onstateUpdate: updateState,
+            homePagesInstance: widget.getInstance(),
+          ),
+    ];
+    return _screens;
+  }
 
   @override
   void initState() {
@@ -54,13 +64,13 @@ class _HomePagesState extends State<HomePages> {
       ),
       body: Container(
         color: const Color.fromARGB(255, 241, 241, 241),
-        child: _screens[_selectedIndex](updateState),
+        child: buildScreens()[_selectedIndex](updateState),
       ),
       drawer: SizedBox(
         width: 250,
         child: _drawer(context),
       ),
-      floatingActionButton: _selectedIndex == 2
+      floatingActionButton: _selectedIndex == 2 && widget.subs
           ? FloatingActionButton(
               onPressed: () {
                 _showDialogNew(context);

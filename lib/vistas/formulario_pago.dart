@@ -15,6 +15,9 @@ class _FormularioPagoState extends State<FormularioPago> {
   final controller = CardFormEditController();
   String errorMessage = '';
   late final Box box;
+  final _formfield = GlobalKey<FormState>();
+  final TextEditingController _passwordController = TextEditingController();
+  bool passwordHidden = true;
 
   @override
   void initState() {
@@ -96,21 +99,79 @@ class _FormularioPagoState extends State<FormularioPago> {
                   placeholderColor: Colors.grey),
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
+            ),
+            const Text(
+                'Por seguridad, debes ingresar tu contraseña para proceder con la suscripción.',
+                textAlign: TextAlign.justify,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(
+              height: 20,
+            ),
+            Form(
+                key: _formfield,
+                child: TextFormField(
+                  maxLength: 30,
+                  controller: _passwordController,
+                  obscureText: passwordHidden,
+                  decoration: InputDecoration(
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Image.asset('assets/password.png',
+                          width: 20, height: 20),
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        //passwordHidden = !passwordHidden;
+                        setState(() {
+                          passwordHidden = !passwordHidden;
+                        });
+                        //updateState();
+                      },
+                      child: Icon(passwordHidden
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                    hintText: "Contraseña",
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    bool passInvalid = RegExp(
+                            r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;\s:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;\s:-]+$")
+                        .hasMatch(value!);
+                    if (value.isEmpty) {
+                      return "Ingrese una contraseña";
+                    } else if (value.length < 6) {
+                      return "Al menos ingrese 6 caracteres.";
+                    } else if (!passInvalid) {
+                      return "Al menos una minúscula o mayúscula, un número y un caracter.";
+                    } else {
+                      return null;
+                    }
+                  },
+                )),
+            const SizedBox(
+              height: 30,
             ),
             ElevatedButton(
               onPressed: () {
                 var token = box.get('token');
                 if (!validation()) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SuscribiendoUser(
-                              tokenUser: token,
-                              plan: widget.plan,
-                              cardNew: true,
-                            )),
-                  );
+                  if (_formfield.currentState!.validate()) {
+                    debugPrint('very ok');
+                    String password = _passwordController.text;
+                    _passwordController.clear();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SuscribiendoUser(
+                                tokenUser: token,
+                                plan: widget.plan,
+                                cardNew: true,
+                                password: password,
+                              )),
+                    );
+                  }
                 } else {
                   showAutoSnackBar(context);
                 }

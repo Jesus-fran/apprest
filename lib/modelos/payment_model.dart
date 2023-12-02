@@ -15,7 +15,8 @@ class PaymentModel {
   });
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) => PaymentModel(
-        status: json["status"],
+        status: json["status"] ??
+            false, // Usa false como valor predeterminado si es nulo
         message: json["message"],
       );
 

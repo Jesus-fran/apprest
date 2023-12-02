@@ -5,10 +5,12 @@ import 'package:http/http.dart' as http;
 
 String url = '${Config.baseUrl}/api/cancel-subscription';
 
-Future<PlanModel> cancelSubscription(String tokenUser) async {
+Future<PlanModel> cancelSubscription(String tokenUser, String password) async {
   final response = await http.post(Uri.parse(url), headers: {
     "Authorization": "Bearer $tokenUser",
     'Accept': 'application/json'
+  }, body: {
+    'password': password,
   });
   String body = utf8.decode(response.bodyBytes);
   print(body);

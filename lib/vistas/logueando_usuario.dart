@@ -26,7 +26,8 @@ class _LogueandoState extends State<Logueando> {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
                     //Si se loguea correctamente
-                    return succesMessage(context, snapshot.data!.token);
+                    return succesMessage(
+                        context, snapshot.data!.token, snapshot.data!.user);
                   } else if (snapshot.data!.statusCode == 200 &&
                       !snapshot.data!.status) {
                     //Si hubo un fallo al loguear
@@ -118,18 +119,17 @@ Widget errorMessage(context, message) {
   return Container();
 }
 
-Widget succesMessage(context, token) {
+Widget succesMessage(context, token, dynamic user) {
   var box = Hive.box('tokenBox');
+  box.put('username', user["username"]);
   box.put('token', token);
 
   // Con WidgetsBinding.instance.addPostFrameCallback() evitamos que ocurra un error
   // al intentar redirigir a una interfaz desde el builder, aseguramos que eso ocurra
   // hasta que se haya construido todo.
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePages()),
-        (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePages()), (route) => false);
   });
 
   return Container();

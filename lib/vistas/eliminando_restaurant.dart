@@ -151,7 +151,7 @@ class _EliminandoRestaurantState extends State<EliminandoRestaurant> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePages(
+              builder: (context) =>  HomePages(
                     initialIndex: 2,
                   )),
           (route) => false);

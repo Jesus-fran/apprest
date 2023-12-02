@@ -7,7 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class Planes extends StatelessWidget {
-  const Planes({Key? key}) : super(key: key);
+  final Function updateState;
+  Planes({Key? key, required this.updateState}) : super(key: key);
+
+  final _formfield = GlobalKey<FormState>();
+  final TextEditingController _passwordController = TextEditingController();
+  bool passwordHidden = true;
+  final _formfieldDos = GlobalKey<FormState>();
+  final TextEditingController _passwordControllerDos = TextEditingController();
+  bool passwordHiddenDos = true;
 
   @override
   Widget build(BuildContext context) {
@@ -342,47 +350,112 @@ class Planes extends StatelessWidget {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(msg),
-            content: const Text(
-                'Tu restaurante dejará de estar disponible, hasta que realices una nueva suscripción.'),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text(msg),
+              content: Column(
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 228, 228, 228),
-                        foregroundColor: Colors.black,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.bold)),
-                    child: const Center(child: Text("Cerrar")),
+                  const Text(
+                      'Por seguridad, debes ingresar tu contraseña para proceder con la cancelación.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(
+                    height: 20,
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 245, 69, 69),
-                        foregroundColor: Colors.white,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CancelandoSub(tokenUser: tokenUser),
-                          ));
-                      print('Cancelando suscripción...');
-                    },
-                    child: const Center(child: Text("Terminar plan")),
+                  Form(
+                      key: _formfield,
+                      child: TextFormField(
+                        maxLength: 30,
+                        controller: _passwordController,
+                        obscureText: passwordHidden,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Image.asset('assets/password.png',
+                                width: 20, height: 20),
+                          ),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              //passwordHidden = !passwordHidden;
+                              setState(() {
+                                passwordHidden = !passwordHidden;
+                              });
+                              //updateState();
+                            },
+                            child: Icon(passwordHidden
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                          hintText: "Contraseña",
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          bool passInvalid = RegExp(
+                                  r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;\s:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;\s:-]+$")
+                              .hasMatch(value!);
+                          if (value.isEmpty) {
+                            return "Ingrese una contraseña";
+                          } else if (value.length < 6) {
+                            return "Al menos ingrese 6 caracteres.";
+                          } else if (!passInvalid) {
+                            return "Al menos una minúscula o mayúscula, un número y un caracter.";
+                          } else {
+                            return null;
+                          }
+                        },
+                      )),
+                  const SizedBox(
+                    height: 20,
                   ),
+                  const Text(
+                      'Tu restaurante dejará de estar disponible, hasta que realices una nueva suscripción.'),
                 ],
-              )
-            ],
-          );
+              ),
+              actions: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 228, 228, 228),
+                          foregroundColor: Colors.black,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      child: const Center(child: Text("Cerrar")),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 245, 69, 69),
+                          foregroundColor: Colors.white,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        if (_formfield.currentState!.validate()) {
+                          String password = _passwordController.text;
+                          _passwordController.clear();
+                          debugPrint("validado correctamente");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CancelandoSub(
+                                    tokenUser: tokenUser, password: password),
+                              ));
+                        }
+                        print('Cancelando suscripción...');
+                      },
+                      child: const Center(child: Text("Terminar plan")),
+                    ),
+                  ],
+                )
+              ],
+            );
+          });
         });
   }
 
@@ -392,48 +465,114 @@ class Planes extends StatelessWidget {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(msg),
-            content: const Text(
-                'Recuerda que para pagar esta suscripción utilizaremos tu método de pago que tienes predeterminado.'),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              scrollable: true,
+              title: Text(msg),
+              content: Column(
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 228, 228, 228),
-                        foregroundColor: Colors.black,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.bold)),
-                    child: const Center(child: Text("Cerrar")),
+                  const Text(
+                      'Por seguridad, debes ingresar tu contraseña para proceder con la suscripción.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(
+                    height: 20,
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 245, 69, 69),
-                        foregroundColor: Colors.white,
-                        textStyle:
-                            const TextStyle(fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SuscribiendoUser(
-                                tokenUser: tokenUser,
-                                plan: plan,
-                                cardNew: false),
-                          ));
-                    },
-                    child: const Center(child: Text("Suscribirme")),
+                  Form(
+                      key: _formfieldDos,
+                      child: TextFormField(
+                        maxLength: 30,
+                        controller: _passwordControllerDos,
+                        obscureText: passwordHiddenDos,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Image.asset('assets/password.png',
+                                width: 20, height: 20),
+                          ),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              //passwordHidden = !passwordHidden;
+                              setState(() {
+                                passwordHiddenDos = !passwordHiddenDos;
+                              });
+                              //updateState();
+                            },
+                            child: Icon(passwordHiddenDos
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                          hintText: "Contraseña",
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          bool passInvalid = RegExp(
+                                  r"^(?=.*[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ])(?=.*\d)(?=.*[@$!%*?&^#/_.;\s:-])[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\d@$!%*?&^#/_.;\s:-]+$")
+                              .hasMatch(value!);
+                          if (value.isEmpty) {
+                            return "Ingrese una contraseña";
+                          } else if (value.length < 6) {
+                            return "Al menos ingrese 6 caracteres.";
+                          } else if (!passInvalid) {
+                            return "Al menos una minúscula o mayúscula, un número y un caracter.";
+                          } else {
+                            return null;
+                          }
+                        },
+                      )),
+                  const SizedBox(
+                    height: 20,
                   ),
+                  const Text(
+                      'Recuerda que para pagar esta suscripción utilizaremos tu método de pago que tienes predeterminado.')
                 ],
-              )
-            ],
-          );
+              ),
+              actions: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 228, 228, 228),
+                          foregroundColor: Colors.black,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      child: const Center(child: Text("Cerrar")),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 245, 69, 69),
+                          foregroundColor: Colors.white,
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        if (_formfieldDos.currentState!.validate()) {
+                          String password = _passwordControllerDos.text;
+                          _passwordControllerDos.clear();
+                          debugPrint("validado correctamente");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SuscribiendoUser(
+                                    tokenUser: tokenUser,
+                                    plan: plan,
+                                    cardNew: false,
+                                    password: password),
+                              ));
+                        }
+                      },
+                      child: const Center(child: Text("Suscribirme")),
+                    ),
+                  ],
+                )
+              ],
+            );
+          });
         });
   }
 }

@@ -63,22 +63,22 @@ class _AdminRestaurantState extends State<AdminRestaurant> {
           height: 20,
         ),
         myCard(context, 'Ubicación', Icons.location_on_rounded,
-            Colors.redAccent, const HomePages()),
+            Colors.redAccent, HomePages()),
         const SizedBox(
           height: 20,
         ),
         myCard(context, 'Ofertas y menú', Icons.local_offer_rounded,
-            Colors.deepOrange, const HomePages()),
+            Colors.deepOrange, HomePages()),
         const SizedBox(
           height: 20,
         ),
         myCard(context, 'Reseñas y/o comentarios', Icons.comment_rounded,
-            Colors.blueAccent, const HomePages()),
+            Colors.blueAccent, HomePages()),
         const SizedBox(
           height: 20,
         ),
         myCard(context, 'Galería de fotos', Icons.photo_library_rounded,
-            Colors.deepPurple, const HomePages()),
+            Colors.deepPurple, HomePages()),
         const SizedBox(
           height: 40,
         ),

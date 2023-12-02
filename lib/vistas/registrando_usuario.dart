@@ -27,7 +27,8 @@ class _RegistrandoUsuarioState extends State<RegistrandoUsuario> {
                   if (snapshot.data!.statusCode == 200 &&
                       snapshot.data!.status) {
                     //Si se registra correctamente
-                    return succesMessage(context, snapshot.data!.token);
+                    return succesMessage(
+                        context, snapshot.data!.token, snapshot.data!.user);
                   } else if (snapshot.data!.statusCode == 200 &&
                       !snapshot.data!.status) {
                     //Si hubo un fallo al registrar
@@ -119,8 +120,9 @@ Widget errorMessage(context, message) {
   return Container();
 }
 
-Widget succesMessage(context, token) {
+Widget succesMessage(context, token, dynamic user) {
   var box = Hive.box('tokenBox');
+  box.put('username', user["username"]);
   box.put('token', token);
 
   // Con WidgetsBinding.instance.addPostFrameCallback() evitamos que ocurra un error

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   String getSaludo() {
     var hora = DateTime.now().hour;
+    var box = Hive.box('tokenBox');
+    String username = box.get('username') ?? '';
 
     if (hora < 12) {
-      return 'Buenos días';
+      return 'Buenos días $username';
     } else if (hora < 18) {
-      return 'Buenas tardes';
+      return 'Buenas tardes $username';
     } else {
-      return 'Buenas noches';
+      return 'Buenas noches $username';
     }
   }
 
