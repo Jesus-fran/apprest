@@ -4,12 +4,18 @@ import 'dart:typed_data';
 import 'package:baseapp/controladores/restaurant_controller.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:baseapp/vistas/admin_restaurant.dart';
+import 'package:baseapp/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class MyRestaurants extends StatelessWidget {
   final Function onstateUpdate;
-  const MyRestaurants({super.key, required this.onstateUpdate});
+  final HomePages homePagesInstance;
+
+  const MyRestaurants(
+      {super.key,
+      required this.onstateUpdate,
+      required this.homePagesInstance});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,12 @@ class MyRestaurants extends StatelessWidget {
             builder: (context, AsyncSnapshot<List<RestaurantModelo>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
+                  if (!homePagesInstance.subs) {
+                    Future.delayed(Duration.zero, () {
+                      homePagesInstance.subs = true;
+                      onstateUpdate(); // Llama a la función de actualización de estado
+                    });
+                  }
                   return const Text(
                     'Sin restaurante',
                     style: TextStyle(fontSize: 18),
@@ -31,12 +43,24 @@ class MyRestaurants extends StatelessWidget {
                 }
 
                 if (snapshot.data![0].statusCode == 403) {
+                  if (homePagesInstance.subs) {
+                    Future.delayed(Duration.zero, () {
+                      homePagesInstance.subs = false;
+                      onstateUpdate(); // Llama a la función de actualización de estado
+                    });
+                  }
                   return Text(
                     snapshot.data![0].message!,
                     style: const TextStyle(fontSize: 18),
                   );
                 }
 
+                if (!homePagesInstance.subs) {
+                  Future.delayed(Duration.zero, () {
+                    homePagesInstance.subs = true;
+                    onstateUpdate(); // Llama a la función de actualización de estado
+                  });
+                }
                 return content(context, snapshot.data!);
               } else {
                 return cargandoMessage(context);
@@ -65,10 +89,11 @@ class MyRestaurants extends StatelessWidget {
               children: restaurants
                   .map((item) => myCard(
                       context,
-                      item.restaurant,
+                      item.restaurant ?? '',
                       item.logo,
                       AdminRestaurant(
-                        restaurant: item.restaurant!,
+                        restaurant:
+                            item.restaurant != null ? item.restaurant! : '',
                         id: item.id_restaurant!,
                         updateState: onstateUpdate,
                       )))

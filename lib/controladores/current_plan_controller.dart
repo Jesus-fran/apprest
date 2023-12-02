@@ -10,7 +10,6 @@ Future<PlanModel> currentPlan(String tokenUser) async {
     "Authorization": "Bearer $tokenUser",
     'Accept': 'application/json'
   });
-  await Future.delayed(const Duration(seconds: 3));
   String body = utf8.decode(response.bodyBytes);
   print(body);
   final jsonData = planModelFromJson(body);

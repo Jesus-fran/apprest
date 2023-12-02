@@ -16,7 +16,7 @@ Future<List<RestaurantModelo>> getRestaurants(String tokenUser) async {
   });
   print(response.statusCode);
   String body = utf8.decode(response.bodyBytes);
-  debugPrint(body);
+  //debugPrint(body);
   if (response.statusCode == 200) {
     final List<dynamic> data = json.decode(body);
     for (var value in data) {

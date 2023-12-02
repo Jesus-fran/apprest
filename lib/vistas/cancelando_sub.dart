@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 class CancelandoSub extends StatefulWidget {
   final String tokenUser;
+  final String password;
   const CancelandoSub({
     super.key,
     required this.tokenUser,
+    required this.password,
   });
 
   @override
@@ -22,7 +24,7 @@ class _CancelandoSubState extends State<CancelandoSub> {
         padding: const EdgeInsets.all(30.0),
         child: Center(
           child: FutureBuilder<PlanModel>(
-              future: cancelSubscription(widget.tokenUser),
+              future: cancelSubscription(widget.tokenUser, widget.password),
               builder: (context, AsyncSnapshot<PlanModel> snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.status) {
@@ -80,6 +82,7 @@ class _CancelandoSubState extends State<CancelandoSub> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pop(context);
+      Navigator.pop(context);
     });
 
     showAutoSnackBar(context);
@@ -107,7 +110,7 @@ class _CancelandoSubState extends State<CancelandoSub> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const HomePages(
+              builder: (context) =>  HomePages(
                     initialIndex: 1,
                   )),
           (route) => false);

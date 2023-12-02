@@ -97,7 +97,7 @@ class _BienvenidaState extends State<Bienvenida> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const HomePages()));
+                                        builder: (context) => HomePages()));
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFFF626B),
