@@ -3,6 +3,7 @@ import 'package:baseapp/modelos/plan_model.dart';
 import 'package:baseapp/vistas/cancelando_sub.dart';
 import 'package:baseapp/vistas/formulario_pago.dart';
 import 'package:baseapp/vistas/suscribiendo.dart';
+import 'package:baseapp/vistas/warning_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -54,6 +55,7 @@ class Planes extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
+        const WarningWidgetValueNotifier(),
         const Text(
           'Nuestros planes',
           style: TextStyle(

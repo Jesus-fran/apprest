@@ -1,3 +1,4 @@
+import 'package:baseapp/controladores/check_internet.dart';
 import 'package:baseapp/vistas/home_pages.dart';
 import 'package:baseapp/vistas/registrar_usuario.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:gdpr_dialog/gdpr_dialog.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'vistas/login_usuario.dart'; // Importamos la vista
+
+final internetChecker = CheckInternetConnection();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'Mi aplicación',
         theme: ThemeData(
+          useMaterial3: true,
           primarySwatch: Colors.grey,
         ),
         home:
@@ -44,6 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mi aplicación',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.grey,
       ),
       home: HomePages(),
