@@ -31,7 +31,7 @@ class _HomePagesState extends State<HomePages> {
 
   List<Widget Function(VoidCallback)> buildScreens() {
     final List<Widget Function(VoidCallback)> _screens = [
-      (updateState) => const Home(),
+      (updateState) => Home(onstateUpdate: updateState),
       (updateState) => Planes(updateState: updateState),
       (updateState) => MyRestaurants(
             onstateUpdate: updateState,
@@ -60,6 +60,10 @@ class _HomePagesState extends State<HomePages> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Perfect Conection"),
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.account_circle_sharp)),
+        ],
         backgroundColor: const Color(0xFFFFF854),
       ),
       body: Container(
