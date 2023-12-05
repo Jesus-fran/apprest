@@ -5,6 +5,7 @@ import 'package:baseapp/controladores/restaurant_controller.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:baseapp/vistas/mapa_restaurant.dart';
 import 'package:baseapp/vistas/placeholders_home.dart';
+import 'package:baseapp/vistas/proximamente.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -171,41 +172,48 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
         const SizedBox(
           height: 15,
         ),
-        Card(
-          elevation: 2,
-          margin: const EdgeInsets.all(10),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MapaRestaurant()),
-              );
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 150,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/icon-google-map.png',
-                    fit: BoxFit.cover,
+        restaurants.ubicacion != null
+            ? Card(
+                elevation: 2,
+                margin: const EdgeInsets.all(10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MapaRestaurant(
+                                name: widget.name,
+                                id: widget.id,
+                              )),
+                    );
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 150,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/icon-google-map.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          "Nos encontramos en ${restaurants.ubicacion}",
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        trailing: const Icon(Icons.location_on,
+                            color: Colors.redAccent),
+                      ),
+                    ],
                   ),
                 ),
-                const ListTile(
-                  title: Text(
-                    "Nos encontramos en primera avenida sur poniente, calle central, Barrio Linda Vista.",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  trailing: Icon(Icons.location_on, color: Colors.redAccent),
-                ),
-              ],
-            ),
-          ),
-        ),
+              )
+            : const Text("Ninguno"),
         const SizedBox(
           height: 15,
         ),
@@ -241,7 +249,7 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MapaRestaurant()),
+                MaterialPageRoute(builder: (context) => const Proximamente()),
               );
             },
             child: Container(
@@ -303,7 +311,7 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
           height: 40,
         ),
         const ListTile(
-          title: Text("Jhon Doe Jimenez"),
+          title: Text("Daniel Nal"),
           subtitle: Column(
             children: [
               Row(
@@ -316,7 +324,7 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
                 ],
               ),
               Text(
-                  "schemes are only supported if there are apps installed on the device that can support them.schemes are only supported if there are apps installed on the device that can support them")
+                  "Comida rica, pedimos enchiladas suizas, chiapanecas y tacos de arrachera, todo muy bien. Está justo frente a la plaza en donde puedes cenar escuchando la marimba.")
             ],
           ),
         ),
@@ -325,7 +333,7 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
           height: 20,
         ),
         const ListTile(
-          title: Text("Jhon Doe Jimenez"),
+          title: Text("Neftali Enoc"),
           subtitle: Column(
             children: [
               Row(
@@ -338,7 +346,7 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
                 ],
               ),
               Text(
-                  "schemes are only supported if there are apps installed on the device that can support them.schemes are only supported if there are apps installed on the device that can support them")
+                  "Excelente restaurante en Ocosingo... felicidades por la deliciosa comida. Por motivos de trabajo visité la ciudad y el restaurante las Delicias nos proporcionó desayuno exquisito, probé el huevo en diferentes variedades: revuelto con jamón y a la mexicana, los chilaquiles con pollo o el desayuno estudiante. Las tortas de milanesa y piernas deliciosas así como la comida: área Vera, pollo frito, consomé de pollo. Muy buena atención y sazón.")
             ],
           ),
         ),

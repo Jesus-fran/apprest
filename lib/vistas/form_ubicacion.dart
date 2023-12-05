@@ -1,23 +1,25 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:baseapp/controladores/restaurant_controller.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
+import 'package:baseapp/vistas/mapa_restaurant.dart';
 import 'package:baseapp/vistas/registrando_menu.dart';
+import 'package:baseapp/vistas/registrando_ubicacion.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FormOfertasMenu extends StatefulWidget {
+class FormUbicacion extends StatefulWidget {
   final int id;
-  const FormOfertasMenu({super.key, required this.id});
+  final String name;
+  const FormUbicacion({super.key, required this.id, required this.name});
   @override
-  State<FormOfertasMenu> createState() => _FormOfertasMenuState();
+  State<FormUbicacion> createState() => _FormUbicacionState();
 }
 
-class _FormOfertasMenuState extends State<FormOfertasMenu> {
+class _FormUbicacionState extends State<FormUbicacion> {
   final _formfield = GlobalKey<FormState>();
-  final TextEditingController _menu = TextEditingController();
+  final TextEditingController _ubicacion = TextEditingController();
   Uint8List? _imageData;
   late Future<RestaurantModelo> _restaurantFuture;
 
@@ -51,7 +53,7 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFFFF854),
         title: const Text(
-          'Ofertas y Menu',
+          'Ubicación',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -88,7 +90,7 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
             setState(() {
               _restaurantFuture = _getRestaurantData();
               _imageData = null;
-              _menu.text = "";
+              _ubicacion.text = "";
             });
           });
         });
@@ -96,45 +98,27 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
 
   Widget fomulario(
       RestaurantModelo data, String tokenUser, BuildContext context) {
-    Uint8List decodeImageString(String imageString) {
-      // Decodificar la cadena base64 a Uint8List
-      return Uint8List.fromList(base64.decode(imageString));
-    }
-
-    _imageData = data.oferta != null && _imageData == null
-        ? decodeImageString(data.oferta!)
-        : _imageData;
-    _menu.text = data.descOferta != null && _menu.text == "" ? data.descOferta! : _menu.text;
+    _ubicacion.text = data.ubicacion != null && _ubicacion.text == ""
+        ? data.ubicacion!
+        : _ubicacion.text;
 
     return ListView(
       children: [
         const Text(
-          'Imagen de oferta',
+          'Describe la ubicación de tu negocio',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.left,
         ),
-        const SizedBox(height: 15),
-        Builder(builder: (BuildContext contextImg) {
-          return _buildImageStack(contextImg);
-        }),
         const SizedBox(height: 20),
-        const Text(
-          'Menu del dia',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.left,
-        ),
         Form(
           key: _formfield,
           child: TextFormField(
-            controller: _menu,
-            maxLines: 6,
-            maxLength: 500,
+            maxLines: 3,
+            controller: _ubicacion,
+            maxLength: 100,
             style: const TextStyle(
                 fontSize: 16.0), // Ajustar el tamaño de la fuente
             decoration: const InputDecoration(
@@ -143,6 +127,12 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
               border: InputBorder.none, // Eliminar el borde del InputDecoration
             ),
             validator: (value) {
+              if (value == "") {
+                return "Ingrese su dirección";
+              }
+              if (value.toString().length < 4) {
+                return "Ingrese al menos 4 caracteres";
+              }
               bool textValid = RegExp(r"^[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s¡!¿?.:,-]+$")
                   .hasMatch(value!);
               if (!textValid && value != '') {
@@ -158,20 +148,19 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
           onPressed: () {
             if (_formfield.currentState!.validate()) {
               debugPrint("validado correctamente");
-              String base64Image =
-                  _imageData != null ? base64Encode(_imageData!) : '';
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RegistrandoMenu(
+                      builder: (context) => RegistrandoUbicacion(
                             id: widget.id,
                             tokenUser: tokenUser,
-                            info: RestaurantModelo(
-                                oferta: base64Image, descOferta: _menu.text),
+                            info: RestaurantModelo(ubicacion: _ubicacion.text),
                           )));
             }
           },
           style: ElevatedButton.styleFrom(
+              shape: const BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(0))),
               backgroundColor: const Color(0xFFFFF854)),
           child: const Text(
             'Guardar cambios',
@@ -179,35 +168,50 @@ class _FormOfertasMenuState extends State<FormOfertasMenu> {
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
-        const SizedBox(height: 10),
         const SizedBox(height: 30),
+        Card(
+          elevation: 2,
+          margin: const EdgeInsets.all(10),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MapaRestaurant(
+                          name: widget.name,
+                          id: widget.id,
+                        )),
+              );
+            },
+            hoverColor: Colors.green.shade900,
+            child: Container(
+              color: Colors.green.shade300,
+              width: double.maxFinite,
+              height: 100,
+              padding: const EdgeInsets.all(16),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.location_on_rounded,
+                      size: 35, color: Colors.redAccent),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                    "Visualizar",
+                    style: TextStyle(fontSize: 16),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         const SizedBox(height: 5),
         const SizedBox(height: 10),
         const SizedBox(height: 10),
-      ],
-    );
-  }
-
-  Widget _buildImageStack(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        _imageData != null
-            ? SizedBox(
-                height: 200,
-                width: double.infinity,
-                child: Image.memory(_imageData!, fit: BoxFit.cover),
-              )
-            : Container(height: 200),
-        Positioned(
-          child: IconButton(
-            iconSize: 70,
-            icon: const Icon(Icons.add_box_rounded, color: Colors.grey),
-            onPressed: () {
-              _getImage();
-            },
-          ),
-        ),
       ],
     );
   }
