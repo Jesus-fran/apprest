@@ -1,5 +1,5 @@
-import 'package:baseapp/controladores/restaurant_controller.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
 class CreandoRestaurant extends StatefulWidget {

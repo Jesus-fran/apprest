@@ -1,7 +1,7 @@
-import 'package:baseapp/controladores/login.dart';
-import 'package:baseapp/modelos/autenticacion_model.dart';
-import 'package:baseapp/modelos/usuario_model.dart';
-import 'package:baseapp/vistas/home_pages.dart';
+import 'package:PerfectConnection/controladores/login.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/modelos/usuario_model.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

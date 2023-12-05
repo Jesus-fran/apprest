@@ -1,4 +1,4 @@
-import 'package:baseapp/vistas/home_pages.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
 class Bienvenida extends StatefulWidget {

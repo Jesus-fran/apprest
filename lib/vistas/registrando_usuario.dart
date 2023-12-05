@@ -1,8 +1,8 @@
-import 'package:baseapp/modelos/autenticacion_model.dart';
-import 'package:baseapp/modelos/usuario_model.dart';
-import 'package:baseapp/vistas/bienvenida.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/modelos/usuario_model.dart';
+import 'package:PerfectConnection/vistas/bienvenida.dart';
 import 'package:flutter/material.dart';
-import 'package:baseapp/controladores/registro.dart';
+import 'package:PerfectConnection/controladores/registro.dart';
 import 'package:hive/hive.dart';
 
 class RegistrandoUsuario extends StatefulWidget {

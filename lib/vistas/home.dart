@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:baseapp/controladores/restaurant_controller.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/filter_restaurant.dart';
-import 'package:baseapp/vistas/perfil_restaurant.dart';
-import 'package:baseapp/vistas/placeholders_home.dart';
-import 'package:baseapp/vistas/search_restaurant.dart';
-import 'package:baseapp/vistas/warning_internet.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/filter_restaurant.dart';
+import 'package:PerfectConnection/vistas/perfil_restaurant.dart';
+import 'package:PerfectConnection/vistas/placeholders_home.dart';
+import 'package:PerfectConnection/vistas/search_restaurant.dart';
+import 'package:PerfectConnection/vistas/warning_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:shimmer/shimmer.dart';

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:baseapp/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:baseapp/config.dart';
+import 'package:PerfectConnection/config.dart';
 
 String url = '${Config.baseUrl}/api/login';
 

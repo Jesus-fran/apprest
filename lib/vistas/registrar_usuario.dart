@@ -1,7 +1,7 @@
-import 'package:baseapp/modelos/usuario_model.dart';
-import 'package:baseapp/vistas/politicas_privacidad.dart';
-import 'package:baseapp/vistas/registrando_usuario.dart';
-import 'package:baseapp/vistas/terminos_condiciones.dart';
+import 'package:PerfectConnection/modelos/usuario_model.dart';
+import 'package:PerfectConnection/vistas/politicas_privacidad.dart';
+import 'package:PerfectConnection/vistas/registrando_usuario.dart';
+import 'package:PerfectConnection/vistas/terminos_condiciones.dart';
 import 'package:flutter/material.dart';
 
 class RegistrarUsuario extends StatefulWidget {

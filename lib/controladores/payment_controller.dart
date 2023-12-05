@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:baseapp/config.dart';
-import 'package:baseapp/modelos/payment_model.dart';
+import 'package:PerfectConnection/config.dart';
+import 'package:PerfectConnection/modelos/payment_model.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 

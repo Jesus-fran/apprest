@@ -1,4 +1,4 @@
-import 'package:baseapp/vistas/enviando_email.dart';
+import 'package:PerfectConnection/vistas/enviando_email.dart';
 import 'package:flutter/material.dart';
 
 class RecuperarPassword extends StatefulWidget {

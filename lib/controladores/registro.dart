@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:baseapp/config.dart';
-import 'package:baseapp/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/config.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
 import 'package:http/http.dart' as http;
 
 String url = '${Config.baseUrl}/api/register';

@@ -1,5 +1,5 @@
-import 'package:baseapp/controladores/recuperar_password_controller.dart';
-import 'package:baseapp/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/controladores/recuperar_password_controller.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
 import 'package:flutter/material.dart';
 
 class EnviandoEmail extends StatefulWidget {
@@ -88,7 +88,10 @@ class _EnviandoEmailState extends State<EnviandoEmail> {
         SizedBox(height: 60),
         Text(
           'Espere un momento, por favor.',
-          style: TextStyle(fontSize: 25, color: Color.fromRGBO(47, 79, 79, 1), fontWeight: FontWeight.w400),
+          style: TextStyle(
+              fontSize: 25,
+              color: Color.fromRGBO(47, 79, 79, 1),
+              fontWeight: FontWeight.w400),
           textAlign: TextAlign.center,
         ),
       ],

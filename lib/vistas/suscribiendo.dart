@@ -1,6 +1,6 @@
-import 'package:baseapp/controladores/payment_controller.dart';
-import 'package:baseapp/modelos/payment_model.dart';
-import 'package:baseapp/vistas/home_pages.dart';
+import 'package:PerfectConnection/controladores/payment_controller.dart';
+import 'package:PerfectConnection/modelos/payment_model.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
 class SuscribiendoUser extends StatefulWidget {

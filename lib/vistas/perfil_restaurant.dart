@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'dart:convert';
-import 'package:baseapp/controladores/restaurant_controller.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/mapa_restaurant.dart';
-import 'package:baseapp/vistas/placeholders_home.dart';
-import 'package:baseapp/vistas/proximamente.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/mapa_restaurant.dart';
+import 'package:PerfectConnection/vistas/placeholders_home.dart';
+import 'package:PerfectConnection/vistas/proximamente.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
