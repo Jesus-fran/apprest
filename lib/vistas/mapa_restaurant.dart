@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:baseapp/controladores/restaurant_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive/hive.dart';
 
 class MapaRestaurant extends StatefulWidget {
-  const MapaRestaurant({Key? key}) : super(key: key);
+  final int id;
+  final String name;
+  const MapaRestaurant({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
   State<MapaRestaurant> createState() => _MapsServiceState();
@@ -12,43 +17,51 @@ class MapaRestaurant extends StatefulWidget {
 
 class _MapsServiceState extends State<MapaRestaurant> {
   final Completer<GoogleMapController> _controller = Completer();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(16.9087174551633, -92.09459449875938),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _camarapositon = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(16.89584377624656, -92.06727491636889),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  final String latitud = '';
 
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box('tokenBox');
+    String tokenUser = box.get('token');
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Mero Lek")),
+        title: Center(child: Text("Ubicación de ${widget.name}")),
         backgroundColor: const Color(0xFFFFF854),
       ),
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.yellow,
-        onPressed: _goToTheLake,
-        label: const Text('Localizar'),
-        icon: const Icon(Icons.location_on, color: Colors.redAccent),
-      ),
+      body: FutureBuilder<dynamic>(
+          future: getUbicacion(tokenUser, widget.id),
+          builder: (context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              CameraPosition kGooglePlex = CameraPosition(
+                target: LatLng(double.parse(snapshot.data![0]['lat']),
+                    double.parse(snapshot.data![0]['lon'])),
+                zoom: 19.151926040649414,
+              );
+              return GoogleMap(
+                mapType: MapType.hybrid,
+                initialCameraPosition: kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              );
+            } else {
+              return cargandoMessage(context);
+            }
+          }),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_camarapositon));
+  Widget cargandoMessage(context) {
+    return const Center(
+      child: Column(
+        children: [
+          SizedBox(height: 200),
+          CircularProgressIndicator(
+            color: Colors.amberAccent,
+          ),
+          SizedBox(height: 60),
+        ],
+      ),
+    );
   }
 }

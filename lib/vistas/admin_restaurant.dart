@@ -1,7 +1,9 @@
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:baseapp/vistas/eliminando_restaurant.dart';
+import 'package:baseapp/vistas/form_ubicacion.dart';
 import 'package:baseapp/vistas/formulario_ofertas_menu.dart';
 import 'package:baseapp/vistas/home_pages.dart';
+import 'package:baseapp/vistas/proximamente.dart';
 import 'package:baseapp/vistas/registrar_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -63,8 +65,15 @@ class _AdminRestaurantState extends State<AdminRestaurant> {
         const SizedBox(
           height: 20,
         ),
-        myCard(context, 'Ubicación', Icons.location_on_rounded,
-            Colors.redAccent, HomePages()),
+        myCard(
+            context,
+            'Ubicación',
+            Icons.location_on_rounded,
+            Colors.redAccent,
+            FormUbicacion(
+              name: widget.restaurant,
+              id: widget.id,
+            )),
         const SizedBox(
           height: 20,
         ),
@@ -80,12 +89,12 @@ class _AdminRestaurantState extends State<AdminRestaurant> {
           height: 20,
         ),
         myCard(context, 'Reseñas y/o comentarios', Icons.comment_rounded,
-            Colors.blueAccent, HomePages()),
+            Colors.blueAccent, const Proximamente()),
         const SizedBox(
           height: 20,
         ),
         myCard(context, 'Galería de fotos', Icons.photo_library_rounded,
-            Colors.deepPurple, HomePages()),
+            Colors.deepPurple, const Proximamente()),
         const SizedBox(
           height: 40,
         ),

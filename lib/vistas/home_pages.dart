@@ -2,6 +2,7 @@ import 'package:baseapp/main.dart';
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:baseapp/vistas/creando_restaurant.dart';
 import 'package:baseapp/vistas/my_restaurants.dart';
+import 'package:baseapp/vistas/proximamente.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'home.dart';
@@ -62,7 +63,13 @@ class _HomePagesState extends State<HomePages> {
         title: const Text("Perfect Conection"),
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.account_circle_sharp)),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Proximamente()),
+                );
+              },
+              icon: const Icon(Icons.account_circle_sharp)),
         ],
         backgroundColor: const Color(0xFFFFF854),
       ),

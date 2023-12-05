@@ -242,3 +242,44 @@ Future<RestaurantModelo> updateMenu(
   data.statusCode = response.statusCode;
   return data;
 }
+
+Future<RestaurantModelo> updateUbicacion(
+    String tokenUser, RestaurantModelo info, int id) async {
+  String url = '${Config.baseUrl}/api/restaurant/update-ubicacion';
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      "Authorization": "Bearer $tokenUser",
+      'Accept': 'application/json'
+    },
+    body: {
+      'id': id.toString(),
+      'ubicacion': info.ubicacion,
+    },
+  );
+  String body = utf8.decode(response.bodyBytes);
+  debugPrint(body);
+  final data = restaurantModeloFromJson(body);
+  data.statusCode = response.statusCode;
+  return data;
+}
+
+Future<dynamic> getUbicacion(String tokenUser, int id) async {
+  String url = '${Config.baseUrl}/api/restaurant/ubicacion';
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      "Authorization": "Bearer $tokenUser",
+      'Accept': 'application/json'
+    },
+    body: {
+      'id': id.toString(),
+    },
+  );
+  String body = utf8.decode(response.bodyBytes);
+  debugPrint(body);
+  final List<dynamic> dataList = json.decode(body);
+  return dataList;
+}
