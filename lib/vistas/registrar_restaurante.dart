@@ -23,7 +23,8 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _telefonoController = TextEditingController();
   final TextEditingController _descripcionController = TextEditingController();
-  String seleccionActual = 'Taquería';
+  String seleccionActual = '';
+  late Future<RestaurantModelo> _restaurantFuture;
 
   Uint8List? _imageData;
 
@@ -37,6 +38,18 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
         _imageData = Uint8List.fromList(imageBytes);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _restaurantFuture = _getRestaurantData();
+  }
+
+  Future<RestaurantModelo> _getRestaurantData() async {
+    Box box = Hive.box('tokenBox');
+    String tokenUser = box.get('token');
+    return getRestaurant(tokenUser, widget.id);
   }
 
   @override
@@ -71,7 +84,7 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
             child: Center(
               child: FutureBuilder<RestaurantModelo>(
                   //OJO AQUI CONSULTAR AL RESTAURANT CON CIERTA ID
-                  future: getRestaurant(tokenUser, widget.id),
+                  future: _restaurantFuture,
                   builder: (context, AsyncSnapshot<RestaurantModelo> snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data!.statusCode == 403) {
@@ -89,7 +102,12 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
           ),
           onRefresh: () {
             return Future(() {
-              setState(() {});
+              setState(() {
+                _imageData = null;
+                _nombreController.text = "";
+                _telefonoController.text = "";
+                _descripcionController.text = "";
+              });
             });
           }),
     );
@@ -102,6 +120,7 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
     }
 
     List<String> elementos = [
+      '',
       'Taquería',
       'Pizzeria',
       'Puesto de Tamales',
@@ -127,12 +146,21 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
     _imageData = data.logo != null && _imageData == null
         ? _decodeImageString(data.logo!)
         : _imageData;
-    _nombreController.text = data.restaurant != null ? data.restaurant! : '';
+    _nombreController.text =
+        data.restaurant != null && _nombreController.text == ""
+            ? data.restaurant!
+            : _nombreController.text;
     _telefonoController.text =
-        data.telefono != null ? data.telefono!.toString() : '';
-    seleccionActual = data.tipo != null ? data.tipo! : seleccionActual;
+        data.telefono != null && _telefonoController.text == ""
+            ? data.telefono!.toString()
+            : _telefonoController.text;
+    seleccionActual = data.tipo != null && seleccionActual == ""
+        ? data.tipo!
+        : seleccionActual;
     _descripcionController.text =
-        data.descripcion != null ? data.descripcion! : '';
+        data.descripcion != null && _descripcionController.text == ""
+            ? data.descripcion!
+            : _descripcionController.text;
 
     return Padding(
       padding: const EdgeInsets.all(0),
@@ -143,7 +171,14 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('Logo: '),
+              const Text(
+                'Logo',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
               const SizedBox(height: 15),
               Stack(
                 alignment: Alignment.center,
@@ -197,7 +232,14 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
                 },
               ),
               const SizedBox(height: 30),
-              const Text('Tipo'),
+              const Text(
+                'Tipo de negocio',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
               const SizedBox(height: 5),
               DropdownButtonFormField<String>(
                 value: seleccionActual,
@@ -214,6 +256,7 @@ class _RegistrarRestauranteState extends State<RegistrarRestaurante> {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                maxLines: null,
                 controller: _descripcionController,
                 maxLength: 100,
                 decoration: const InputDecoration(labelText: 'Descripción'),

@@ -1,5 +1,6 @@
 import 'package:baseapp/modelos/restaurant_model.dart';
 import 'package:baseapp/vistas/eliminando_restaurant.dart';
+import 'package:baseapp/vistas/formulario_ofertas_menu.dart';
 import 'package:baseapp/vistas/home_pages.dart';
 import 'package:baseapp/vistas/registrar_restaurante.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +68,14 @@ class _AdminRestaurantState extends State<AdminRestaurant> {
         const SizedBox(
           height: 20,
         ),
-        myCard(context, 'Ofertas y menú', Icons.local_offer_rounded,
-            Colors.deepOrange, HomePages()),
+        myCard(
+            context,
+            'Ofertas y menú',
+            Icons.local_offer_rounded,
+            Colors.deepOrange,
+            FormOfertasMenu(
+              id: widget.id,
+            )),
         const SizedBox(
           height: 20,
         ),

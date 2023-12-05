@@ -220,15 +220,16 @@ class _PerfilRestaurantState extends State<PerfilRestaurant> {
         const SizedBox(
           height: 15,
         ),
-        Container(
-          height: 200,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/imgnodisp.jpg"), fit: BoxFit.cover),
-          ),
-        ),
+        restaurants.oferta != null
+            ? SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: Image.memory(decodeImageString(restaurants.oferta!),
+                    fit: BoxFit.cover),
+              )
+            : Container(height: 0),
         ListTile(
-          title: Text(restaurants.descripcion ?? 'Ninguna descripción'),
+          title: Text(restaurants.descOferta ?? 'Ningún menú'),
         ),
         const SizedBox(
           height: 15,
