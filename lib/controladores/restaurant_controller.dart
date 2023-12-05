@@ -219,3 +219,26 @@ Future<List<RestaurantModelo>> getSearchRestaurant(
   }
   return lista;
 }
+
+Future<RestaurantModelo> updateMenu(
+    String tokenUser, RestaurantModelo info, int id) async {
+  String url = '${Config.baseUrl}/api/restaurant/update-menu';
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      "Authorization": "Bearer $tokenUser",
+      'Accept': 'application/json'
+    },
+    body: {
+      'id': id.toString(),
+      'oferta': info.oferta,
+      'desc_oferta': info.descOferta,
+    },
+  );
+  String body = utf8.decode(response.bodyBytes);
+  debugPrint(body);
+  final data = restaurantModeloFromJson(body);
+  data.statusCode = response.statusCode;
+  return data;
+}

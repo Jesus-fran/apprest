@@ -45,7 +45,7 @@ class RestaurantModelo {
           tipo: json["tipo"],
           ubicacion: json["ubicacion"],
           statusCode: json['statusCode'],
-          descOferta: json["descOferta"],
+          descOferta: json["desc_oferta"],
           oferta: json["oferta"],
           message: json['message'],
           status: json['status']);
@@ -59,7 +59,7 @@ class RestaurantModelo {
         "descripcion": descripcion,
         "tipo": tipo,
         "ubicacion": ubicacion,
-        "descOferta": descOferta,
+        "desc_oferta": descOferta,
         "oferta": oferta,
         "message": message,
         "status": status
