@@ -1,4 +1,4 @@
-import 'package:baseapp/vistas/suscribiendo.dart';
+import 'package:PerfectConnection/vistas/suscribiendo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hive/hive.dart';

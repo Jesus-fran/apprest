@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:baseapp/config.dart';
-import 'package:baseapp/modelos/plan_model.dart';
+import 'package:PerfectConnection/config.dart';
+import 'package:PerfectConnection/modelos/plan_model.dart';
 import 'package:http/http.dart' as http;
 
 String url = '${Config.baseUrl}/api/current-plan';

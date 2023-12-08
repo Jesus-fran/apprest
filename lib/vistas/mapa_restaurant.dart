@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:baseapp/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';

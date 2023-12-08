@@ -1,9 +1,9 @@
-import 'package:baseapp/controladores/current_plan_controller.dart';
-import 'package:baseapp/modelos/plan_model.dart';
-import 'package:baseapp/vistas/cancelando_sub.dart';
-import 'package:baseapp/vistas/formulario_pago.dart';
-import 'package:baseapp/vistas/suscribiendo.dart';
-import 'package:baseapp/vistas/warning_internet.dart';
+import 'package:PerfectConnection/controladores/current_plan_controller.dart';
+import 'package:PerfectConnection/modelos/plan_model.dart';
+import 'package:PerfectConnection/vistas/cancelando_sub.dart';
+import 'package:PerfectConnection/vistas/formulario_pago.dart';
+import 'package:PerfectConnection/vistas/suscribiendo.dart';
+import 'package:PerfectConnection/vistas/warning_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

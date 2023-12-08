@@ -1,6 +1,6 @@
-import 'package:baseapp/controladores/check_internet.dart';
-import 'package:baseapp/vistas/home_pages.dart';
-import 'package:baseapp/vistas/registrar_usuario.dart';
+import 'package:PerfectConnection/controladores/check_internet.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
+import 'package:PerfectConnection/vistas/registrar_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:gdpr_dialog/gdpr_dialog.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     //Si no existe un token, quiere decir que no se ha iniciado sesión.
     if (tokenBox.get('token') == null || tokenBox.get('') == '') {
       return MaterialApp(
-        title: 'Mi aplicación',
+        title: 'Perfect Connection',
         theme: ThemeData(
           useMaterial3: true,
           primarySwatch: Colors.grey,
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
     //Si exite un token registrado, quiere decir que se ha iniciado sesión, entonces redirige
     //a la pantalla de Home
     return MaterialApp(
-      title: 'Mi aplicación',
+      title: 'Perfect Connection',
       theme: ThemeData(
         useMaterial3: true,
         primarySwatch: Colors.grey,

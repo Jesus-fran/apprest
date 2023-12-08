@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:baseapp/controladores/restaurant_controller.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/mapa_restaurant.dart';
-import 'package:baseapp/vistas/registrando_menu.dart';
-import 'package:baseapp/vistas/registrando_ubicacion.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/mapa_restaurant.dart';
+import 'package:PerfectConnection/vistas/registrando_menu.dart';
+import 'package:PerfectConnection/vistas/registrando_ubicacion.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';

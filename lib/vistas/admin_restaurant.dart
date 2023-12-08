@@ -1,10 +1,10 @@
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/eliminando_restaurant.dart';
-import 'package:baseapp/vistas/form_ubicacion.dart';
-import 'package:baseapp/vistas/formulario_ofertas_menu.dart';
-import 'package:baseapp/vistas/home_pages.dart';
-import 'package:baseapp/vistas/proximamente.dart';
-import 'package:baseapp/vistas/registrar_restaurante.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/eliminando_restaurant.dart';
+import 'package:PerfectConnection/vistas/form_ubicacion.dart';
+import 'package:PerfectConnection/vistas/formulario_ofertas_menu.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
+import 'package:PerfectConnection/vistas/proximamente.dart';
+import 'package:PerfectConnection/vistas/registrar_restaurante.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:baseapp/controladores/check_internet.dart';
-import 'package:baseapp/main.dart';
+import 'package:PerfectConnection/controladores/check_internet.dart';
+import 'package:PerfectConnection/main.dart';
 import 'package:flutter/cupertino.dart';
 
 class ConnectionStatusValueNotifier extends ValueNotifier<ConnectionStatus> {

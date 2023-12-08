@@ -1,6 +1,6 @@
-import 'package:baseapp/controladores/cancel_plan_controller.dart';
-import 'package:baseapp/modelos/plan_model.dart';
-import 'package:baseapp/vistas/home_pages.dart';
+import 'package:PerfectConnection/controladores/cancel_plan_controller.dart';
+import 'package:PerfectConnection/modelos/plan_model.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
 class CancelandoSub extends StatefulWidget {
@@ -110,7 +110,7 @@ class _CancelandoSubState extends State<CancelandoSub> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>  HomePages(
+              builder: (context) => HomePages(
                     initialIndex: 1,
                   )),
           (route) => false);

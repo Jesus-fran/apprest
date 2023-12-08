@@ -1,8 +1,8 @@
-import 'package:baseapp/main.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/creando_restaurant.dart';
-import 'package:baseapp/vistas/my_restaurants.dart';
-import 'package:baseapp/vistas/proximamente.dart';
+import 'package:PerfectConnection/main.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/creando_restaurant.dart';
+import 'package:PerfectConnection/vistas/my_restaurants.dart';
+import 'package:PerfectConnection/vistas/proximamente.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'home.dart';

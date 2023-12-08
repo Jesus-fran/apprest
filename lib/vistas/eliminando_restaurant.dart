@@ -1,7 +1,7 @@
-import 'package:baseapp/controladores/restaurant_controller.dart';
-import 'package:baseapp/modelos/autenticacion_model.dart';
-import 'package:baseapp/modelos/restaurant_model.dart';
-import 'package:baseapp/vistas/home_pages.dart';
+import 'package:PerfectConnection/controladores/restaurant_controller.dart';
+import 'package:PerfectConnection/modelos/autenticacion_model.dart';
+import 'package:PerfectConnection/modelos/restaurant_model.dart';
+import 'package:PerfectConnection/vistas/home_pages.dart';
 import 'package:flutter/material.dart';
 
 class EliminandoRestaurant extends StatefulWidget {
@@ -151,7 +151,7 @@ class _EliminandoRestaurantState extends State<EliminandoRestaurant> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>  HomePages(
+              builder: (context) => HomePages(
                     initialIndex: 2,
                   )),
           (route) => false);

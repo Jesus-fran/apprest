@@ -1,5 +1,5 @@
-import 'package:baseapp/controladores/check_internet.dart';
-import 'package:baseapp/controladores/connection_status_value_notifier.dart';
+import 'package:PerfectConnection/controladores/check_internet.dart';
+import 'package:PerfectConnection/controladores/connection_status_value_notifier.dart';
 import 'package:flutter/material.dart';
 
 class WarningWidgetValueNotifier extends StatelessWidget {
